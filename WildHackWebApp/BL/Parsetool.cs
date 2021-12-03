@@ -19,19 +19,19 @@ namespace WildHackWebApp.BL
         /// Возвращает список новых экологических событий.
         /// </summary>
         /// <returns>Список <see cref="EcologyEvent"/>.</returns>
-        public static async List<EcologyEvent> GetLastUpdates()
+        public static async Task<List<EcologyEvent>> GetLastUpdatesAsync()
         {
             List<EcologyEvent> resultList = new List<EcologyEvent>();
             HttpClient client = new HttpClient();
-            foreach(var site in siteDict)
+            foreach(var site in siteDict.Keys)
             {
-                resultList.Add(await ParseSite(site, client));
+                resultList.AddRange(await ParseSiteAsync(site, client));
             }
             
             return resultList;
         }
 
-        private static async List<EcologyEvent> ParseSite(SiteName site, HttpClient client)
+        private static async Task<List<EcologyEvent>> ParseSiteAsync(SiteName site, HttpClient client)
         {
             string rawPage = await client.GetStringAsync(siteDict[site][0]);
             string articlesPath = siteDict[site][1];
@@ -55,9 +55,15 @@ namespace WildHackWebApp.BL
         }
 
         //Парсит строку для даты
-        private static DateTime DateParser(string time)
+        private static Date DateParser(string time)
         {
-            return null;
+            var ecologyEvents = ParseTool.GetLastUpdatesAsync().Result;
+            string[] dateFromSiteArray = ecologyEvents[0].Title.Trim().Split(' ').
+                                        Where(s => s.Contains('.')).First().Split('.');
+            
+            return new Date() { Day = int.Parse(dateFromSiteArray[0]), 
+                                Month = int.Parse(dateFromSiteArray[1]), 
+                                Year = int.Parse(dateFromSiteArray[2]) };
         }
     }
 }

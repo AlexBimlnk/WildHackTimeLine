@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WildHackWebApp.BL;
 
 namespace WildHackWebApp.Models
 {
@@ -23,7 +24,7 @@ namespace WildHackWebApp.Models
         ///<summary>
         ///Дата события
         /// </summary>
-        public DateTime Date { get; set; }
+        public Date Date { get; set; }
         /// <summary>
         /// Описание события.
         /// </summary>
