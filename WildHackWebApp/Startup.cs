@@ -24,6 +24,8 @@ using VueCliMiddleware;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
+using WildHackWebApp.Models;
 // using Microsoft.Extensions.DependencyInjection;
 // using Microsoft.Extensions.Hosting;
 // using VueCliMiddleware;
@@ -131,9 +133,10 @@ namespace WildHackWebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddControllers();
             services.AddControllersWithViews();
 
+            services.AddDbContext<EcologyEventContext>(opt => opt.UseSqlServer($"Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=EcologyEventDB;Integrated Security=True"));
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
