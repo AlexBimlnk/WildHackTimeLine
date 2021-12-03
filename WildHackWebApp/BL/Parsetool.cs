@@ -46,6 +46,7 @@ namespace WildHackWebApp.BL
                 EcologyEvent ecoEvent = new EcologyEvent();
                 ecoEvent.Title = article.SelectSingleNode(titlePath).InnerText;
                 ecoEvent.Date = DateParser(article.SelectSingleNode(timePath).InnerText);
+                resultList.Add(ecoEvent);
             }
 
             await Task.Run(() => { });
@@ -55,8 +56,7 @@ namespace WildHackWebApp.BL
         //Парсит строку для даты
         private static Date DateParser(string time)
         {
-            var ecologyEvents = ParseTool.GetLastUpdatesAsync().Result;
-            string[] dateFromSiteArray = ecologyEvents[0].Title.Trim().Split(' ').
+            string[] dateFromSiteArray = time.Trim().Split(' ').
                                         Where(s => s.Contains('.')).First().Split('.');
             
             return new Date() { Day = int.Parse(dateFromSiteArray[0]), 
