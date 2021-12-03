@@ -3,17 +3,35 @@
     <div class="card timeline-content">
       <div class="card-content teal white-text">
         <p>
-          Google announces the search algorithm change dubbed the “Speed Update"
-          coming in July.
+          {{ content.title }}
         </p>
       </div>
     </div>
     <div class="timeline-badge red lighten-3 white-text"></div>
+    <div class="year">{{$store.state.dataForTimeline[0].date.fullDate}}</div>
   </div>
 </template>
 
+<script>
+export default {
+  props: {
+    content: {
+      type: Object,
+    },
+  },
+};
+</script>
+
 <style lang="less" scoped>
 @import url("../../node_modules/materialize-css/dist/css/materialize.min.css");
+.year {
+  display: block;
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: calc(50% - 8px);
+  right: calc(50% - 35px);
+}
 body {
   background-color: #eee;
 }
@@ -53,10 +71,10 @@ body {
       display: none;
     }
     &:nth-child(even) .timeline-content {
-    //   margin-left: calc(50% + 50px);
+      //   margin-left: calc(50% + 50px);
     }
     &:nth-child(odd) .timeline-content {
-    //   margin-left: 0;
+      //   margin-left: 0;
     }
   }
   .timeline-badge {

@@ -1,6 +1,9 @@
 <template>
   <div class="home-page">
-    <h1>Clear template</h1>
+    <h1>Новостной портал по Камчатке</h1>
+    <button @click="showTimeLine">Показать таймлайн</button>
+    <button @click="hiddenTimeline">Скрыть таймлайн</button>
+    <timeline v-if="timeline" />
     <div class="container-timeline">
       <news-card
         @click="openCardNews(content)"
@@ -9,7 +12,6 @@
         :cardContent="content"
       />
     </div>
-    <timeline />
   </div>
 </template>
 
@@ -21,13 +23,25 @@ export default {
     newsCard,
     timeline
   },
-  // data() {
-  //   return {};
-  // },
+  data() {
+    return {
+      timeline: false,
+    };
+  },
   methods: {
     openCardNews(item) {
       this.$router.push(`/news/${item.title}`)
     },
+    showTimeLine() {
+      this.timeline = true
+    },
+    clearTimeline() {
+      this.$store.commit('clearTimeline')
+    },
+    hiddenTimeline() {
+      // this.clearTimeline()
+      this.timeline = false
+    }
   },
 };
 </script>
