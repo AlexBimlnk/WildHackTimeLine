@@ -12,7 +12,7 @@ namespace WildHackWebApp.BL
     {
         private static Dictionary<SiteName, string[]> siteDict = new Dictionary<SiteName, string[]>
         {
-            {SiteName.SiteName1, new string[] { "https://poluostrov-kamchatka.ru/pknews/english/14/", "//div[@class='{cls}']", "./h3", "./p[1]" } },
+            {SiteName.SiteName1, new string[] { "https://poluostrov-kamchatka.ru/pknews/english/14/", "//div[@class='article-info']", "./h3", "./p[1]" } },
         };
 
         /// <summary>
@@ -22,7 +22,7 @@ namespace WildHackWebApp.BL
         public static async Task<List<EcologyEvent>> GetLastUpdatesAsync()
         {
             List<EcologyEvent> resultList = new List<EcologyEvent>();
-            HttpClient client = new HttpClient();
+            HtmlWeb client = new HtmlWeb();
             foreach(var site in siteDict.Keys)
             {
                 resultList.AddRange(await ParseSiteAsync(site, client));
@@ -31,17 +31,14 @@ namespace WildHackWebApp.BL
             return resultList;
         }
 
-        private static async Task<List<EcologyEvent>> ParseSiteAsync(SiteName site, HttpClient client)
+        private static async Task<List<EcologyEvent>> ParseSiteAsync(SiteName site, HtmlWeb client)
         {
-            string rawPage = await client.GetStringAsync(siteDict[site][0]);
+            HtmlDocument page = client.Load(siteDict[site][0]);
             string articlesPath = siteDict[site][1];
             string titlePath = siteDict[site][2];
             string timePath = siteDict[site][3];
 
-            HtmlDocument parsedPage = new HtmlDocument();
-            parsedPage.LoadHtml(rawPage);
-
-            var articles = parsedPage.DocumentNode.SelectNodes(articlesPath);
+            var articles = page.DocumentNode.SelectNodes(articlesPath);
 
             List<EcologyEvent> resultList = new List<EcologyEvent>();
             foreach (var article in articles)
@@ -51,6 +48,7 @@ namespace WildHackWebApp.BL
                 ecoEvent.Date = DateParser(article.SelectSingleNode(timePath).InnerText);
             }
 
+            await Task.Run(() => { });
             return resultList;
         }
 
