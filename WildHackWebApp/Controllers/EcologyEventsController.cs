@@ -25,7 +25,7 @@ namespace WildHackWebApp.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EcologyEvent>>> GetEcologyEvents()
         {
-            var ecologyEvents = Parsetool.GetLastUpdates();
+            var ecologyEvents = ParseTool.GetLastUpdates();
             string date = ecologyEvents[0].Title;
             Random rnd = new Random();
             await Task.Run(() =>

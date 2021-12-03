@@ -2,63 +2,63 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Net.Http;
 using HtmlAgilityPack;
 using WildHackWebApp.Models;
 
 namespace WildHackWebApp.BL
 {
-    public class Parsetool
+    public class ParseTool
     {
-        private static Dictionary<SiteName, string> keyValues = new Dictionary<SiteName, string>
+        private static Dictionary<SiteName, string[]> siteDict = new Dictionary<SiteName, string[]>
         {
-            {SiteName.SiteName1, "tag1|url" },
-            {SiteName.SiteName2, "tag2|url" }
+            {SiteName.SiteName1, new string[] {"url", "articlesPath", "titlePath", "datePath"} },
+            {SiteName.SiteName2, new string[] {"url", "articlesPath", "titlePath", "datePath"} }
         };
-
-        //Публичный метод возвращаюий модели
-        public static void GetLastUpd()
-        {
-            foreach(var siteName in keyValues.Keys)
-            {
-                ParsLogic(siteName);
-            }
-        }
-
-        //Закрытый метод выполняющий логику парса
-        private static void ParsLogic(SiteName siteName)
-        {
-            var mas = keyValues[siteName].Split('|');
-            string tag = mas[0];
-            string url = mas[1];
-            //Здесь будет прописана логика, которая подходит для всех сайтов
-            //TODO
-        }
 
         /// <summary>
         /// Возвращает список новых экологических событий.
         /// </summary>
         /// <returns>Список <see cref="EcologyEvent"/>.</returns>
-        public static List<EcologyEvent> GetLastUpdates()
+        public static async List<EcologyEvent> GetLastUpdates()
         {
             List<EcologyEvent> resultList = new List<EcologyEvent>();
-            string url = "https://poluostrov-kamchatka.ru/pknews/english/14/";
-            string cls = "article-info";
-
-            HtmlWeb web = new HtmlWeb();
-            HtmlDocument doc = web.Load(url);
-
-            var tags = doc.DocumentNode.SelectNodes($"//div[@class='{cls}']");
-
-            int i = 0;
-            foreach (HtmlNode node in tags)
+            HttpClient client = new HttpClient();
+            foreach(var site in siteDict)
             {
-                EcologyEvent ecologyEvent = new EcologyEvent();
-                ecologyEvent.Id = i;
-                ecologyEvent.Title = node.SelectSingleNode("./p[1]").InnerText;
-                resultList.Add(ecologyEvent);
-                i++;
+                resultList.Add(await ParseSite(site, client));
             }
+            
             return resultList;
+        }
+
+        private static async List<EcologyEvent> ParseSite(SiteName site, HttpClient client)
+        {
+            string rawPage = await client.GetStringAsync(siteDict[site][0]);
+            string articlesPath = siteDict[site][1];
+            string titlePath = siteDict[site][2];
+            string timePath = siteDict[site][3];
+
+            HtmlDocument parsedPage = new HtmlDocument();
+            parsedPage.LoadHtml(rawPage);
+
+            var articles = parsedPage.DocumentNode.SelectNodes(articlesPath);
+
+            List<EcologyEvent> resultList = new List<EcologyEvent>();
+            foreach (var article in articles)
+            {
+                EcologyEvent ecoEvent = new EcologyEvent();
+                ecoEvent.Title = article.SelectSingleNode(titlePath).InnerText;
+                ecoEvent.Date = DateParser(article.SelectSingleNode(timePath).InnerText);
+            }
+
+            return resultList;
+        }
+
+        //Парсит строку для даты
+        private static DateTime DateParser(string time)
+        {
+            return null;
         }
     }
 }
