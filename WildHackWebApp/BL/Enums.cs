@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 
 namespace WildHackWebApp.BL
 {
-    public class Class
+    public enum SiteName
     {
+        SiteName1,
+        SiteName2
     }
 }
