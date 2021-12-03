@@ -9,9 +9,35 @@ namespace WildHackWebApp.BL
 {
     public class Parsetool
     {
+        private static Dictionary<SiteName, string> keyValues = new Dictionary<SiteName, string>
+        {
+            {SiteName.SiteName1, "tag1|url" },
+            {SiteName.SiteName2, "tag2|url" }
+        };
+
+        //Публичный метод возвращаюий модели
+        public static void GetLastUpd()
+        {
+            foreach(var siteName in keyValues.Keys)
+            {
+                ParsLogic(siteName);
+            }
+        }
+
+        //Закрытый метод выполняющий логику парса
+        private static void ParsLogic(SiteName siteName)
+        {
+            var mas = keyValues[siteName].Split('|');
+            string tag = mas[0];
+            string url = mas[1];
+            //Здесь будет прописана логика, которая подходит для всех сайтов
+            //TODO
+        }
+
         /// <summary>
-        /// Возвращает новые статьи
+        /// Возвращает список новых экологических событий.
         /// </summary>
+        /// <returns>Список <see cref="EcologyEvent"/>.</returns>
         public static List<EcologyEvent> GetLastUpdates()
         {
             List<EcologyEvent> resultList = new List<EcologyEvent>();
@@ -32,7 +58,6 @@ namespace WildHackWebApp.BL
                 resultList.Add(ecologyEvent);
                 i++;
             }
-
             return resultList;
         }
     }

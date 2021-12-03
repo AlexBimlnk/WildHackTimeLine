@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using WildHackWebApp.BL;
 using WildHackWebApp.Models;
 
 namespace WildHackWebApp.Controllers
@@ -24,7 +25,8 @@ namespace WildHackWebApp.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EcologyEvent>>> GetEcologyEvents()
         {
-            List<EcologyEvent> ecologyEvents = new List<EcologyEvent>();
+            var ecologyEvents = Parsetool.GetLastUpdates();
+            string date = ecologyEvents[0].Title;
             Random rnd = new Random();
             await Task.Run(() =>
             {
