@@ -13,6 +13,10 @@ const routes = [
   //   component: () =>
   //     import( "../views/About.vue"),
   // },
+  {
+    path: '/news/:id',
+    component: () => import("../views/FullEvent.vue")
+  }
 ];
 
 const router = createRouter({

@@ -3,8 +3,8 @@
 </template>
 
 <style lang="less">
-.container {
-  width: 1000px;
+.container-timeline {
+  width: 650px;
   margin: 0 auto;
 }
 </style>
