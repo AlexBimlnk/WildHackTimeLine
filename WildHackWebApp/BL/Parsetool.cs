@@ -47,7 +47,7 @@ namespace WildHackWebApp.BL
             {
                 EcologyEvent ecoEvent = new EcologyEvent();
                 ecoEvent.Title = article.SelectSingleNode(titlePath).InnerText;
-                ecoEvent.Date = DateParser(article.SelectSingleNode(timePath).InnerText);
+                ecoEvent.Date = new Date(article.SelectSingleNode(timePath).InnerText);
                 resultList.Add(ecoEvent);
             }
 
