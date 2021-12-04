@@ -145,7 +145,7 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 .white-container {
   background-color: #fff;
   padding: 30px 0;

@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class="img-block">
-      <img :src="cardContent.img" alt="" />
+      <img :src="cardContent.pictureLink" alt="" />
     </div>
     <div @click.stop class="reaction withPadding">
       <p class="like">{{ like }}</p>

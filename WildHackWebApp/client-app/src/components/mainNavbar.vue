@@ -21,6 +21,9 @@
             <li class="tab">
               <router-link to="/timeline">Таймлайн</router-link>
             </li>
+            <li class="tab">
+              <router-link to="/newPost">Предложить пост</router-link>
+            </li>
           </ul>
         </div>
       </div>

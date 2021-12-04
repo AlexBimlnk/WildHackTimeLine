@@ -20,7 +20,11 @@ const routes = [
   {
     path: '/timeline',
     component: () => import("../views/TimelineTab.vue")
-  }
+  },
+  {
+    path: '/newPost',
+    component: () => import("../views/NewPost.vue")
+  },
 ];
 
 const router = createRouter({
