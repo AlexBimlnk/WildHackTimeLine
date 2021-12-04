@@ -42,10 +42,25 @@ namespace WildHackWebApp.Controllers
         }
 
         // GET: api/EcologyEvents
+        [HttpGet("new")]
+        public async Task<ActionResult<IEnumerable<EcologyEvent>>> GetNewEcologyEvents()
+        {
+            List<EcologyEvent> ecologyEvents = await ParseTool.GetDatasetAsync();
+            Judge.SortByDate(Judge.CompareWithOld(ecologyEvents, await _context.EcologyEvents.ToListAsync()));
+            foreach (var i in ecologyEvents)
+            {
+                _context.Add(i);
+            }
+            _context.SaveChanges();
+            //var ecoEvn = ParseTool.GetDatasetAsync(DatasetOption.Init);
+            return await _context.EcologyEvents.Skip(_context.EcologyEvents.Count() - 15).ToListAsync();
+        }
+
+        // GET: api/EcologyEvents
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EcologyEvent>>> GetEcologyEvents()
         {
-            //return await ParseTool.GetDatasetAsync(DatasetOption.Update);
+            //var ecoEvn = ParseTool.GetDatasetAsync(DatasetOption.Init);
             return await _context.EcologyEvents.ToListAsync();
         }
 
@@ -66,7 +81,7 @@ namespace WildHackWebApp.Controllers
         // PUT: api/EcologyEvents/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEcologyEvent(long id, EcologyEvent ecologyEvent)
+        public async Task<IActionResult> PutEcologyEvent(long id, [FromBody] EcologyEvent ecologyEvent)
         {
             if (id != ecologyEvent.Id)
             {

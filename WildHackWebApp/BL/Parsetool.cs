@@ -51,7 +51,7 @@ namespace WildHackWebApp.BL
             {
                 resultList.AddRange(await ParseSiteAsync(site, client, flag));
             }
-            
+            Judge.SortByDate(Judge.ClearEqualEvents(resultList));
             return resultList;
         }
 
