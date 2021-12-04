@@ -14,14 +14,14 @@ namespace WildHackWebApp.BL
         {
             {SiteName.PoluostrovKamchatka, new string[] { "https://poluostrov-kamchatka.ru/pknews/english/",
                                                           "//div[@class='article-info']",
-                                                          "//h3",
-                                                          "//p[1]",
-                                                          "//h3/a[@href]/@href" } },
+                                                          ".//h3",
+                                                          ".//p[1]",
+                                                          ".//h3/a[@href]/@href" } },
             {SiteName.Ria, new string[] { "https://ria.ru/organization_Kronockijj_zapovednik/",
-                                          "//div[@class='list-item']",
-                                          "//div[@class='list-item__content']",
-                                          "//div[@class='list-item__date']",
-                                          "//div[@class='list-item__content']//a[@href]/@href" } },
+                                          ".//div[@class='list-item']",
+                                          ".//div[@class='list-item__content']",
+                                          ".//div[@class='list-item__date']",
+                                          ".//div[@class='list-item__content']//a[@href]/@href" } },
             //{SiteName.GoogleNews, new string[] { "https://news.google.com/search?q=%D0%BA%D0%B0%D0%BC%D1%87%D0%B0%D1%82%D0%BA%D0%B0%20%D0%B7%D0%B0%D0%BF%D0%BE%D0%B2%D0%B5%D0%B4%D0%BD%D0%B8%D0%BA%20when%3A1d&hl=ru&gl=RU&ceid=RU%3Aru",
                                                  //"//div[@class='xrnccd']",
                                                  //"//h3[@class='ipQwMb ekueJc RD0gLb']",
@@ -61,7 +61,7 @@ namespace WildHackWebApp.BL
             foreach (var article in articles)
             {
                 EcologyEvent ecoEvent = new EcologyEvent();
-                HtmlNodeNavigator navigator = (HtmlNodeNavigator) article.CreateNavigator();
+                var navigator = article.CreateNavigator();
                 ecoEvent.Title = navigator.SelectSingleNode(titlePath).Value;
                 ecoEvent.Date = new Date(navigator.SelectSingleNode(timePath).Value).FullDate;
                 ecoEvent.Link = navigator.SelectSingleNode(linkPath).Value;
