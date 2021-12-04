@@ -42,64 +42,26 @@ namespace WildHackWebApp.Controllers
         }
 
         // GET: api/EcologyEvents
+        [HttpGet("new")]
+        public async Task<ActionResult<IEnumerable<EcologyEvent>>> GetNewEcologyEvents()
+        {
+            List<EcologyEvent> ecologyEvents = await ParseTool.GetDatasetAsync();
+            Judge.SortByDate(Judge.CompareWithOld(ecologyEvents, await _context.EcologyEvents.ToListAsync()));
+            foreach (var i in ecologyEvents)
+            {
+                _context.Add(i);
+            }
+            _context.SaveChanges();
+            //var ecoEvn = ParseTool.GetDatasetAsync(DatasetOption.Init);
+            return await _context.EcologyEvents.Skip(_context.EcologyEvents.Count() - 15).ToListAsync();
+        }
+
+        // GET: api/EcologyEvents
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EcologyEvent>>> GetEcologyEvents()
         {
-            //return await ParseTool.GetDatasetAsync(DatasetOption.Update);
-            List<EcologyEvent> ecologyEvents = await _context.EcologyEvents.ToListAsync();
-            ecologyEvents.Sort((ecoEvent1, ecoEvent2) =>
-            {
-                int year1 = int.Parse(ecoEvent1.Date.Substring(6, 4));
-                int year2 = int.Parse(ecoEvent2.Date.Substring(6, 4));
-                if (year1 == year2)
-                {
-                    int month1 = int.Parse(ecoEvent1.Date.Substring(3, 2));
-                    int month2 = int.Parse(ecoEvent2.Date.Substring(3, 2));
-                    if (month1 == month2)
-                    {
-                        int day1 = int.Parse(ecoEvent1.Date.Substring(0, 2));
-                        int day2 = int.Parse(ecoEvent2.Date.Substring(0, 2));
-                        if (day1 == day2)
-                        {
-                            return 0;
-                        }
-                        else
-                        {
-                            if (day1 > day2)
-                            {
-                                return 1;
-                            }
-                            else
-                            {
-                                return -1;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (month1 > month2)
-                        {
-                            return 1;
-                        }
-                        else
-                        {
-                            return -1;
-                        }
-                    }
-                }
-                else
-                {
-                    if (year1 > year2)
-                    {
-                        return 1;
-                    }
-                    else
-                    {
-                        return -1;
-                    }
-                }
-            });
-            return ecologyEvents;
+            //var ecoEvn = ParseTool.GetDatasetAsync(DatasetOption.Init);
+            return await _context.EcologyEvents.ToListAsync();
         }
 
         // GET: api/EcologyEvents/5

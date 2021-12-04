@@ -44,6 +44,8 @@ namespace WildHackWebApp.BL
         /// </summary>
         public static List<EcologyEvent> CompareWithOld(List<EcologyEvent> newEco, List<EcologyEvent> oldEco)
         {
+            if (newEco.Count == 0 || newEco == null)
+                return null;
             for (int i = newEco.Count; i >= 0; i--)
             {
                 for (int j = 0; j < oldEco.Count; j++)
@@ -125,6 +127,64 @@ namespace WildHackWebApp.BL
         public static bool IsEventsEqual(EcologyEvent first, EcologyEvent second)
         {
             return FuzzyComparer.IsFuzzyEqual(first.Title, second.Title);
+        }
+
+        public static void SortByDate(List<EcologyEvent> ecologyEvents)
+        {
+            if (ecologyEvents == null || ecologyEvents.Count == 0)
+                return;
+            ecologyEvents.Sort((ecoEvent1, ecoEvent2) =>
+            {
+                int year1 = int.Parse(ecoEvent1.Date.Substring(6, 4));
+                int year2 = int.Parse(ecoEvent2.Date.Substring(6, 4));
+                if (year1 == year2)
+                {
+                    int month1 = int.Parse(ecoEvent1.Date.Substring(3, 2));
+                    int month2 = int.Parse(ecoEvent2.Date.Substring(3, 2));
+                    if (month1 == month2)
+                    {
+                        int day1 = int.Parse(ecoEvent1.Date.Substring(0, 2));
+                        int day2 = int.Parse(ecoEvent2.Date.Substring(0, 2));
+                        if (day1 == day2)
+                        {
+                            return 0;
+                        }
+                        else
+                        {
+                            if (day1 > day2)
+                            {
+                                return 1;
+                            }
+                            else
+                            {
+                                return -1;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (month1 > month2)
+                        {
+                            return 1;
+                        }
+                        else
+                        {
+                            return -1;
+                        }
+                    }
+                }
+                else
+                {
+                    if (year1 > year2)
+                    {
+                        return 1;
+                    }
+                    else
+                    {
+                        return -1;
+                    }
+                }
+            });
         }
     }
 }
