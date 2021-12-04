@@ -68,6 +68,7 @@ namespace WildHackWebApp.BL
                     ecoEvent.Date = new Date(navigator.SelectSingleNode(timePath).Value);
                 }
                 catch { }
+                ecoEvent.Date = new Date(navigator.SelectSingleNode(timePath).Value).FullDate;
                 ecoEvent.Link = navigator.SelectSingleNode(linkPath).Value;
                 resultList.Add(ecoEvent);
             }

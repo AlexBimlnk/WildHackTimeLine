@@ -34,30 +34,18 @@ namespace WildHackWebApp.BL
         {
             set
             {
-                if (value < 1)
-                    _day = -1;
-                else
+                _day = -1;
+                if (value >= 1 && value <= 31)
                 {
                     if (_month == 2)
                     {
                         if (value < 29)
                             _day = value;
-                        else
-                        {
-                            if (value == 29 && _year % 4 == 0)
-                                _day = 29;
-                            else
-                                _day = -1;
-                        }
-
+                        else if (value == 29 && _year % 4 == 0)
+                            _day = 29;
                     }
                     else
-                    {
-                        if (value > _daysInMonths[_month])
-                            _day = -1;
-                        else
-                            _day = value;
-                    }
+                        _day = value;
                 }
             } 
             get { return _day; }
