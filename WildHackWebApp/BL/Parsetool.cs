@@ -54,23 +54,5 @@ namespace WildHackWebApp.BL
             await Task.Run(() => { });
             return resultList;
         }
-
-        //Парсит строку для даты
-        private static Date DateParser(string time)
-        {
-            try
-            {
-                string[] dateFromSiteArray = time.Trim().Split(' ').
-                                            Where(s => s.Contains('.')).First().Split('.');
-                
-                return new Date() { Day = int.Parse(dateFromSiteArray[0]), 
-                                    Month = int.Parse(dateFromSiteArray[1]), 
-                                    Year = int.Parse(dateFromSiteArray[2]) };
-            }
-            catch
-            {
-                return new Date() { Day = -1, Month = -1, Year = -1 };
-            }
-        }
     }
 }
