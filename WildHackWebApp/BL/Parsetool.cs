@@ -69,7 +69,7 @@ namespace WildHackWebApp.BL
                 ecoEvent.Date = new Date(navigator.SelectSingleNode(pageElement.TimePath).Value).FullDate;
 
                 string link = navigator.SelectSingleNode(pageElement.LinkPath).Value;
-                if (!link.Contains(pageElement.SiteUrl))
+                if (!link.Contains(pageElement.SiteURL))
                     ecoEvent.Link = pageElement.SiteURL + link.TrimStart('.');
                 else
                     ecoEvent.Link = link;
