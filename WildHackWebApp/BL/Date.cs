@@ -44,7 +44,7 @@ namespace WildHackWebApp.BL
                         else if (value == 29 && _year % 4 == 0)
                             _day = 29;
                     }
-                    else
+                    else if(value <= _daysInMonths[Month])
                         _day = value;
                 }
             } 
