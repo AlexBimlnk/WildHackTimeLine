@@ -89,14 +89,11 @@ namespace WildHackWebApp.BL
         {
             if (arr.Length > 2)
                 example.TrySetYear(arr[2]);
+            else
+                example.Year = 2021; //Здесь не доработано, нужно сетить год от сегодняшнего дня если он не указан
             example.TrySetMonth(arr[1]);
             example.TrySetDay(arr[0]);
         };
-
-        //TODO логику для сета гета
-        public int Day { get; set; }
-        public int Month { get; set; }
-        public int Year { get; set; }
 
         public string FullDate
         {
