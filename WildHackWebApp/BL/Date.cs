@@ -13,7 +13,6 @@ namespace WildHackWebApp.BL
         private int day;
         private int month;
         private int year;
-        //TODO логику для сета гета
         public int Day
         {
             set
