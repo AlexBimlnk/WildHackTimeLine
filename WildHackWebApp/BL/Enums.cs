@@ -11,4 +11,10 @@ namespace WildHackWebApp.BL
         Ria,
         GoogleNews
     }
+
+    public enum DatasetOption
+    {
+        Init,
+        Update
+    }
 }

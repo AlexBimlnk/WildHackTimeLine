@@ -32,6 +32,14 @@ namespace WildHackWebApp.Models
         /// </summary>
         public string Link { get; set; }
 
+        /// <summary>
+        /// Ссылка на картинку
+        /// </summary>
         public string PictureLink { get; set; }
+
+        /// <summary>
+        /// Рейтинг
+        /// </summary>
+        public int Rating { get; set; }
     }
 }

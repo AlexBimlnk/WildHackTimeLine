@@ -19,14 +19,34 @@ namespace WildHackWebApp.Controllers
         public EcologyEventsController(EcologyEventContext context)
         {
             _context = context;
+            if (_context.EcologyEvents.Count() == 0)
+            {
+                Task<List<EcologyEvent>> task = ParseTool.GetDatasetAsync(DatasetOption.Init);
+                List<EcologyEvent> ecologyEvents = task.Result;
+                foreach (var i in ecologyEvents)
+                {
+                    _context.Add(i);
+                }
+                _context.SaveChanges();
+            }
+        }
+
+        // GET: api/EcologyEvents
+        [HttpGet("test")]
+        public async Task<IEnumerable<EcologyEvent>> GetEcologyEvents1()
+        {
+            //return await ParseTool.GetDatasetAsync(DatasetOption.Update);
+            List<EcologyEvent> list = await _context.EcologyEvents.ToListAsync();
+
+            return list.Where(ecEvent => ecEvent.Link == "https://ria.ru/20211111/oleni-1758491544.html").ToList();
         }
 
         // GET: api/EcologyEvents
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EcologyEvent>>> GetEcologyEvents()
         {
-            return await ParseTool.GetLastUpdatesAsync();
-            //return await _context.EcologyEvents.ToListAsync();
+            //return await ParseTool.GetDatasetAsync(DatasetOption.Update);
+            return await _context.EcologyEvents.ToListAsync();
         }
 
         // GET: api/EcologyEvents/5
@@ -82,7 +102,7 @@ namespace WildHackWebApp.Controllers
             _context.EcologyEvents.Add(ecologyEvent);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetEcologyEvent", new { id = ecologyEvent.Id }, ecologyEvent);
+            return NoContent();
         }
 
         // DELETE: api/EcologyEvents/5
