@@ -12,14 +12,6 @@ namespace WildHackWebApp.BL
     {
         private static Dictionary<SiteName, PageElement> siteDict = new Dictionary<SiteName, PageElement>
         {
-            {SiteName.PoluostrovKamchatka, new PageElement() {
-                                          SiteURL = "https://poluostrov-kamchatka.ru",
-                                          RequestURL = "https://poluostrov-kamchatka.ru/pknews/english/",
-                                          ArticlesPath = "//div[@class='article-inner default']",
-                                          TitlePath = ".//h3",
-                                          TimePath = ".//p[1]",
-                                          LinkPath = ".//h3/a[@href]/@href",
-                                          PictureURL = ".//img[@class='img-100p latest-post-image']/@src"} },
             {SiteName.Ria, new PageElement() {
                                          SiteURL = "https://ria.ru/",
                                          RequestURL = "https://ria.ru/organization_Kronockijj_zapovednik/",
@@ -28,6 +20,14 @@ namespace WildHackWebApp.BL
                                          TimePath = ".//div[@class='list-item__date']",
                                          LinkPath = ".//div[@class='list-item__content']//a[@href]/@href",
                                          PictureURL = ".//source[@media-type='ar16x9']/@srcset"} },
+            {SiteName.PoluostrovKamchatka, new PageElement() {
+                                          SiteURL = "https://poluostrov-kamchatka.ru",
+                                          RequestURL = "https://poluostrov-kamchatka.ru/pknews/english/",
+                                          ArticlesPath = "//div[@class='article-inner default']",
+                                          TitlePath = ".//h3",
+                                          TimePath = ".//p[1]",
+                                          LinkPath = ".//h3/a[@href]/@href",
+                                          PictureURL = ".//img[@class='img-100p latest-post-image']/@src"} },
             {SiteName.GoogleNews, new PageElement() {
                                          SiteURL = "https://news.google.com",
                                          RequestURL = "https://news.google.com/search?q=%D0%BA%D0%B0%D0%BC%D1%87%D0%B0%D1%82%D0%BA%D0%B0%20%D0%B7%D0%B0%D0%BF%D0%BE%D0%B2%D0%B5%D0%B4%D0%BD%D0%B8%D0%BA%20when%3A7d&hl=ru&gl=RU&ceid=RU%3Aru",
