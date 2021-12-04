@@ -23,6 +23,7 @@ namespace WildHackWebApp.BL
         {
             List<EcologyEvent> resultList = new List<EcologyEvent>();
             HtmlWeb client = new HtmlWeb();
+            client.UserAgent = " Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36";
             foreach(var site in siteDict.Keys)
             {
                 resultList.AddRange(await ParseSiteAsync(site, client));
