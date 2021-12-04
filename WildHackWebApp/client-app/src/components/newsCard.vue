@@ -14,10 +14,13 @@
       <img :src="cardContent.pictureLink" alt="" />
     </div>
     <div @click.stop class="reaction withPadding">
-      <p class="like">{{ like }}</p>
-      <span @click="like++" class="material-icons"> expand_less </span>
-      <span @click="useless++" class="material-icons"> expand_more </span>
-      <p class="useless">{{ useless }}</p>
+      <span @click="like" class="material-icons"> expand_less </span>
+      <p
+        :class="{ like: rating > 0, useless: rating < 0, common: rating === 0 }"
+      >
+        {{ rating }}
+      </p>
+      <span @click="dislike" class="material-icons"> expand_more </span>
     </div>
   </div>
 </template>
@@ -31,10 +34,51 @@ export default {
   },
   data() {
     return {
-      like: 10,
-      useless: 3,
+      like_bool: true,
+      startState: 0,
+      dislike_bool: true,
+      rating: 0,
     };
   },
+  methods: {
+    like() {
+      if (this.like_bool) {
+        this.rating++;
+        this.like_bool = false;
+        this.dislike_bool = true;
+        if (this.startState === this.rating) {
+          this.resetResults()
+        }
+      }
+    },
+    dislike() {
+      if (this.dislike_bool) {
+        this.rating--;
+        this.dislike_bool = false;
+        this.like_bool = true;
+        if (this.startState === this.rating) {
+          this.resetResults()
+        }
+      }
+    },
+    resetResults() {
+      this.like_bool = true;
+      this.dislike_bool = true;
+    }
+  },
+  // watch: {
+  //   rating(rating, prev) {
+  //     console.log(rating, prev);
+  //     if (rating > prev) {
+  //       this.dislike_bool = false;
+  //       this.like_bool = true;
+  //       // if (firstClick)
+  //     } else {
+  //       this.like_bool = false;
+  //       this.dislike_bool = true;
+  //     }
+  //   },
+  // },
 };
 </script>
 
@@ -63,7 +107,10 @@ export default {
     color: #2ea83a;
   }
   & .useless {
-    color: crimson
+    color: crimson;
+  }
+  & .common {
+    color: black;
   }
 }
 .material-icons {

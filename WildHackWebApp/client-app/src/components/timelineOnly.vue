@@ -2,11 +2,15 @@
   <div class="timeline">
     <div class="timeline-container">
       <div class="timeline">
-        <timeline-event
-          v-for="content in $store.state.dataForTimeline"
-          :key="content"
-          :content="content"
-        />
+        <transition-group
+          enter-active-class="animated bounceInDown"
+        >
+          <timeline-event
+            v-for="content in $store.state.dataForTimeline"
+            :key="content"
+            :content="content"
+          />
+        </transition-group>
       </div>
     </div>
   </div>
