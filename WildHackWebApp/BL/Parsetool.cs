@@ -69,12 +69,14 @@ namespace WildHackWebApp.BL
                 EcologyEvent ecoEvent = new EcologyEvent();
                 var navigator = article.CreateNavigator();
                 ecoEvent.Title = navigator.SelectSingleNode(titlePath).Value;
-                try
-                {
-                    ecoEvent.Date = new Date(navigator.SelectSingleNode(timePath).Value).FullDate;
-                }
-                catch { }
-                ecoEvent.Link = navigator.SelectSingleNode(linkPath).Value;
+                try { ecoEvent.Date = new Date(navigator.SelectSingleNode(timePath).Value).FullDate;} catch { }
+
+                string link = navigator.SelectSingleNode(linkPath).Value;
+                if (!link.Contains(siteDict[site].SiteURL))
+                    ecoEvent.Link = siteDict[site].SiteURL + link.TrimStart('.');
+                else
+                    ecoEvent.Link = link;
+
                 resultList.Add(ecoEvent);
             }
 
