@@ -13,7 +13,7 @@ namespace WildHackWebApp.BL
         private static Dictionary<SiteName, string[]> siteDict = new Dictionary<SiteName, string[]>
         {
             {SiteName.SiteName1, new string[] { "https://poluostrov-kamchatka.ru/pknews/english/", "//div[@class='article-info']", "./h3", "./p[1]" } },
-            {SiteName.SiteName2, new string[] { "https://ria.ru/organization_Kronockijj_zapovednik/", "//div[@class='list-item']", "./div[@class='list-item__content']", "./div[@class='list-item__date']" } },
+            {SiteName.SiteName2, new string[] { "https://ria.ru/organization_Kronockijj_zapovednik/", "//div[@class='list-item']", ".//div[@class='list-item__content']", ".//div[@class='list-item__date']" } },
         };
 
         /// <summary>
