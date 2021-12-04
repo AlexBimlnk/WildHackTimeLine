@@ -16,6 +16,10 @@ const routes = [
   {
     path: '/news/:id',
     component: () => import("../views/FullEvent.vue")
+  },
+  {
+    path: '/timeline',
+    component: () => import("../views/TimelineTab.vue")
   }
 ];
 

@@ -34,10 +34,10 @@ export default {
   padding: 10px 20px;
 }
 .card {
+  box-shadow: 0 0 20px rgba(37, 63, 26, 0.5);
   display: block;
   border-radius: 10px;
   margin: 50px auto 0;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   width: 640px;
   &-title {
     font-weight: 900;

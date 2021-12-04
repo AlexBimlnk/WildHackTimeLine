@@ -66,6 +66,12 @@ export default createStore({
       state.dataForTimeline = data;
     },
   },
-  actions: {},
+  actions: {
+    async fetchTimelineData(context) {
+      const res = await fetch('/api/EcologyEvents')
+      const data = await res.json()
+      context.commit('setDataForTimeline', data)
+    }
+  },
   modules: {},
 });

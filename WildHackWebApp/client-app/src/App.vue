@@ -1,19 +1,23 @@
 <template>
-  <router-view />
+  <div class="app">
+    <main-navbar />
+    <router-view />
+  </div>
 </template>
 
 <script>
+import mainNavbar from "./components/mainNavbar.vue"
 export default {
-  async mounted() {
-    const res = await fetch('/api/EcologyEvents')
-    const data = await res.json()
-    this.$store.commit('setDataForTimeline', data)
-    console.log(data)
+  components: {
+    mainNavbar
   }
 }
 </script>
 
 <style lang="less">
+.app {
+  background-color: #F0F0F0;
+}
 .container-timeline {
   width: 650px;
   margin: 0 auto;

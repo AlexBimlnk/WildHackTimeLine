@@ -8,7 +8,7 @@
       </div>
     </div>
     <div class="timeline-badge red lighten-3 white-text"></div>
-    <div class="year">{{$store.state.dataForTimeline[0].date.fullDate}}</div>
+    <div class="year">{{ content.date.fullDate }}</div>
   </div>
 </template>
 
@@ -24,7 +24,15 @@ export default {
 
 <style lang="less" scoped>
 @import url("../../node_modules/materialize-css/dist/css/materialize.min.css");
+.card {
+  background: rgba(0, 0, 0, 0) !important;
+  box-shadow: none;
+}
+.card-content {
+  background: rgba(0, 0, 0, 0) !important;
+}
 .year {
+  color: #fff;
   display: block;
   position: absolute;
   width: 16px;
@@ -115,7 +123,18 @@ body {
     }
   }
 }
-
+.card {
+  width: 450px !important;
+  &::after {
+    content: "";
+    width: 120px;
+    background-color: #fff;
+    height: 1px;
+    position: absolute;
+    right: -130px;
+    top: 50%;
+  }
+}
 .card-title {
   // font-weight: 600!important;
   line-height: 1em;

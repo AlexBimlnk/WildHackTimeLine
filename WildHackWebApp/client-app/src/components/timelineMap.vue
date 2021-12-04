@@ -16,8 +16,8 @@
       </div>
       <div class="col m6 col-for-map">
         <div class="map">
-          <div  class="point point-west"></div>
-          <div  class="point point-east"></div>
+          <div class="point point-west"></div>
+          <div class="point point-east"></div>
         </div>
       </div>
     </div>
