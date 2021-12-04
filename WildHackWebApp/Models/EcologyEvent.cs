@@ -24,7 +24,7 @@ namespace WildHackWebApp.Models
         ///<summary>
         ///Дата события
         /// </summary>
-        public Date Date { get; set; }
+        public string Date { get; set; }
         /// <summary>
         /// Описание события.
         /// </summary>
