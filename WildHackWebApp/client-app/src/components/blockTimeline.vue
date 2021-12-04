@@ -11,9 +11,6 @@
 <script>
 import timelineOnly from "./timelineOnly.vue";
 export default {
-  mounted() {
-    this.$store.dispatch("fetchTimelineData");
-  },
   components: {
     timelineOnly,
   },

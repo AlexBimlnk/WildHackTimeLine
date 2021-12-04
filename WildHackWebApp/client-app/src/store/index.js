@@ -14,8 +14,25 @@ export default createStore({
         year: 2019,
       },
     ],
+
+    // Для цветов
+    maxRating: 0,
+    minRating: 10,
   },
   mutations: {
+    changeMax(state, el) {
+      state.maxRating = el;
+    },
+    changeMin(state, el) {
+      state.minRating = el;
+    },
+    setNormalizeColor(state) {
+      const ratings = state.dataForTimeline.map((el) => el.rating);
+      const max = Math.max(...ratings);
+      const min = Math.min(...ratings);
+      state.normalizeColors =
+        ratings.map((rating) => (rating - min) * 100) / (max - min);
+    },
     clearTimeline(state) {
       state.dataForTimeline = [];
     },
@@ -33,23 +50,38 @@ export default createStore({
       state.dataForTimeline = data;
     },
     setDataForLineNews(state, data) {
-      state.contents.push(data)
+      state.contents.push(data);
     },
     addTestElement(state) {
-      state.dataForTimeline.unshift({title: 'Test elem', link: "/wefwefwef", picture: "/qwfqf", date: "00 00 00"})
-    }
+      state.dataForTimeline.unshift({
+        title: "Test elem",
+        link: "/wefwefwef",
+        picture: "/qwfqf",
+        date: "00 00 00",
+      });
+    },
+    setRandomRating(state) {
+      state.dataForTimeline.forEach((el) => {
+        const randomElement = Math.floor(Math.random() * 500);
+        el.rating = randomElement;
+      });
+    },
   },
   actions: {
     async fetchTimelineData(context) {
-      const res = await fetch('/api/EcologyEvents')
-      const data = await res.json()
-      context.commit('setDataForTimeline', data)
+      const res = await fetch("/api/EcologyEvents");
+      const data = await res.json();
+      context.commit("setDataForTimeline", data);
+      // Тестовое заполнение рейтинга для цвета кружков
+      context.commit("setRandomRating");
+      // Нормализуем цвета в отельном массиве
+      context.commit("setNormalizeColor");
     },
     async fetchLineNews(context) {
-      const res = await fetch('/api/EcologyEvents')
-      const data = await res.json()
-      data.forEach(el => context.commit('setDataForLineNews', el))
-    }
+      const res = await fetch("/api/EcologyEvents");
+      const data = await res.json();
+      data.forEach((el) => context.commit("setDataForLineNews", el));
+    },
   },
   modules: {},
 });

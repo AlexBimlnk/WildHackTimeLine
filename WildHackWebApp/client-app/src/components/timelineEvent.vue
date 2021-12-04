@@ -9,7 +9,8 @@
         </div>
       </div>
     </a>
-    <div class="timeline-badge red lighten-3 white-text"></div>
+    <!-- <div class="timeline-badge red lighten-3 white-text"></div> -->
+    <div class="timeline-badge white-text" :style="{backgroundColor: `rgb(0, ${normalizedColor}, 0)`}"></div>
     <div class="year">{{ content.date }}</div>
   </div>
 </template>
@@ -20,6 +21,22 @@ export default {
     content: {
       type: Object,
     },
+    idx: {
+      type: Number,
+    },
+  },
+  mounted() {
+    if (this.content.rating > this.$store.state.maxRating) {
+      this.$store.commit("changeMax", this.content.rating);
+    }
+    if (this.content.rating < this.$store.state.minRating) {
+      this.$store.commit("changeMin", this.content.rating);
+    }
+  },
+  computed: {
+    normalizedColor() {
+      return ((this.content.rating - this.$store.state.minRating) * 255) / (this.$store.state.maxRating - this.$store.state.minRating);
+    },
   },
 };
 </script>
@@ -29,6 +46,9 @@ export default {
 .card {
   background: rgba(0, 0, 0, 0) !important;
   box-shadow: none;
+  &:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
 }
 .card-content {
   background: rgba(0, 0, 0, 0) !important;

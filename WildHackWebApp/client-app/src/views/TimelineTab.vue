@@ -8,7 +8,7 @@
 import blockTimeline from "../components/blockTimeline.vue";
 export default {
   mounted() {
-    console.log(this.$route);
+    this.$store.dispatch("fetchTimelineData");
   },
   components: {
     blockTimeline,
@@ -23,6 +23,4 @@ export default {
 }
 </style>
 
-<style lang="less">
-
-</style>
+<style lang="less"></style>

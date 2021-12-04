@@ -2,9 +2,7 @@
   <div class="timeline">
     <div class="timeline-container">
       <div class="timeline">
-        <transition-group
-          enter-active-class="animated bounceInDown"
-        >
+        <transition-group enter-active-class="animated bounceInDown">
           <timeline-event
             v-for="content in $store.state.dataForTimeline"
             :key="content"
@@ -18,17 +16,21 @@
 <script>
 import timelineEvent from "./timelineEvent.vue";
 export default {
+  mounted() {
+    console.log(this.$store.state.dataForTimeline);
+  },
   components: {
     timelineEvent,
   },
-  methods: {
-    fetchWest() {
-      this.$store.commit("clearTimeline");
-      this.$store.commit("forTest_west");
-    },
-    fetchEast() {
-      this.$store.commit("clearTimeline");
-      this.$store.commit("forTest_east");
+  computed: {
+    normalizeColors() {
+      const dataRes = this.$store.state.dataForTimeline;
+      const ratings = dataRes.map((el) => el.rating);
+      console.log(...ratings);
+      const max = Math.max(...ratings);
+      const min = Math.min(...ratings);
+      console.log(max, min);
+      return ratings.map((rating) => (rating - min) * 100) / (max - min);
     },
   },
 };
