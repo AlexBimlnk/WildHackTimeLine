@@ -12,8 +12,8 @@ namespace WildHackWebApp.BL
     {
         private static Dictionary<SiteName, string[]> siteDict = new Dictionary<SiteName, string[]>
         {
-            {SiteName.SiteName1, new string[] { "https://poluostrov-kamchatka.ru/pknews/english/", "//div[@class='article-info']", "./h3", "./p[1]" } },
-            {SiteName.SiteName2, new string[] { "https://ria.ru/organization_Kronockijj_zapovednik/", "//div[@class='list-item']", ".//div[@class='list-item__content']", ".//div[@class='list-item__date']" } },
+            //{SiteName.SiteName1, new string[] { "https://poluostrov-kamchatka.ru/pknews/english/", "//div[@class='article-info']", "./h3", "./p[1]", ".//h3/a[@href]" } },
+            {SiteName.SiteName2, new string[] { "https://ria.ru/organization_Kronockijj_zapovednik/", "//div[@class='list-item']", ".//div[@class='list-item__content']", ".//div[@class='list-item__date']", ".//div[@class='list-item__content']/a[@href]" } },
         };
 
         /// <summary>
@@ -39,6 +39,7 @@ namespace WildHackWebApp.BL
             string articlesPath = siteDict[site][1];
             string titlePath = siteDict[site][2];
             string timePath = siteDict[site][3];
+            string linkPath = siteDict[site][4];
 
             var articles = page.DocumentNode.SelectNodes(articlesPath);
 
@@ -48,6 +49,7 @@ namespace WildHackWebApp.BL
                 EcologyEvent ecoEvent = new EcologyEvent();
                 ecoEvent.Title = article.SelectSingleNode(titlePath).InnerText;
                 ecoEvent.Date = new Date(article.SelectSingleNode(timePath).InnerText);
+                ecoEvent.Link = article.SelectSingleNode(linkPath).Attributes["href"].Value;
                 resultList.Add(ecoEvent);
             }
 
