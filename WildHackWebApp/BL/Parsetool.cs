@@ -23,10 +23,10 @@ namespace WildHackWebApp.BL
                                           //".//div[@class='list-item__date']",
                                           //".//div[@class='list-item__content']//a[@href]/@href" } },
             {SiteName.GoogleNews, new string[] { "https://news.google.com/search?q=%D0%BA%D0%B0%D0%BC%D1%87%D0%B0%D1%82%D0%BA%D0%B0%20%D0%B7%D0%B0%D0%BF%D0%BE%D0%B2%D0%B5%D0%B4%D0%BD%D0%B8%D0%BA%20when%3A7d&hl=ru&gl=RU&ceid=RU%3Aru",
-                                                 "//div[@class='xrnccd']",
-                                                 "//h3[@class='ipQwMb ekueJc RD0gLb']",
-                                                 "//time[@class='WW6dff uQIVzc Sksgp']",
-                                                 "//h3/a[@href]/@href" } },
+                                                 ".//div[@class='xrnccd']",
+                                                 ".//h3[@class='ipQwMb ekueJc RD0gLb']",
+                                                 ".//time[@class='WW6dff uQIVzc Sksgp']/@datetime",
+                                                 ".//h3/a[@href]/@href" } },
         };
 
         /// <summary>
