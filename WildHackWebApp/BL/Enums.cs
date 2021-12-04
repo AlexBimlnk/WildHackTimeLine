@@ -7,7 +7,8 @@ namespace WildHackWebApp.BL
 {
     public enum SiteName
     {
-        SiteName1,
-        SiteName2
+        PoluostrovKamchatka,
+        Ria,
+        GoogleNews
     }
 }

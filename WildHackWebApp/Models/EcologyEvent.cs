@@ -21,13 +21,15 @@ namespace WildHackWebApp.Models
         /// Название события.
         /// </summary>
         public string Title { get; set; }
+
         ///<summary>
         ///Дата события
         /// </summary>
-        public Date Date { get; set; }
+        public string Date { get; set; }
+
         /// <summary>
-        /// Описание события.
+        /// Ссылка на событие
         /// </summary>
-        public string Description { get; set; }
+        public string Link { get; set; }
     }
 }
