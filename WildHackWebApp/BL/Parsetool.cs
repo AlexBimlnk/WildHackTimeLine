@@ -13,6 +13,7 @@ namespace WildHackWebApp.BL
         private static Dictionary<SiteName, string[]> siteDict = new Dictionary<SiteName, string[]>
         {
             {SiteName.SiteName1, new string[] { "https://poluostrov-kamchatka.ru/pknews/english/", "//div[@class='article-info']", "./h3", "./p[1]" } },
+            {SiteName.SiteName2, new string[] { "https://ria.ru/organization_Kronockijj_zapovednik/", "//div[@class='list-item']", "./div[@class='list-item__content']", "./div[@class='list-item__date']" } },
         };
 
         /// <summary>
@@ -57,12 +58,19 @@ namespace WildHackWebApp.BL
         //Парсит строку для даты
         private static Date DateParser(string time)
         {
-            string[] dateFromSiteArray = time.Trim().Split(' ').
-                                        Where(s => s.Contains('.')).First().Split('.');
-            
-            return new Date() { Day = int.Parse(dateFromSiteArray[0]), 
-                                Month = int.Parse(dateFromSiteArray[1]), 
-                                Year = int.Parse(dateFromSiteArray[2]) };
+            try
+            {
+                string[] dateFromSiteArray = time.Trim().Split(' ').
+                                            Where(s => s.Contains('.')).First().Split('.');
+                
+                return new Date() { Day = int.Parse(dateFromSiteArray[0]), 
+                                    Month = int.Parse(dateFromSiteArray[1]), 
+                                    Year = int.Parse(dateFromSiteArray[2]) };
+            }
+            catch
+            {
+                return new Date() { Day = -1, Month = -1, Year = -1 };
+            }
         }
     }
 }
