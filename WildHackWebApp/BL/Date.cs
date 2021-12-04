@@ -8,7 +8,7 @@ namespace WildHackWebApp.BL
     [Serializable]
     public class Date
     {
-        int[] daysInMonths = { -1, 31, -1, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+        private int[] daysInMonths = { -1, 31, -1, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
         private int day;
         private int month;
