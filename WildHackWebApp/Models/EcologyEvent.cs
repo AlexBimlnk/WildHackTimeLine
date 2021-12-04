@@ -29,5 +29,9 @@ namespace WildHackWebApp.Models
         /// Описание события.
         /// </summary>
         public string Description { get; set; }
+        /// <summary>
+        /// Ссылка на событие
+        /// </summary>
+        public string Link { get; set; }
     }
 }
