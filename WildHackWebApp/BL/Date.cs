@@ -92,7 +92,7 @@ namespace WildHackWebApp.BL
             inputData = inputData.Trim();
             string[] resultArray = inputData.Split(' ');
             DateTime dateTime;
-            if (!DateTime.TryParse(inputData, out dateTime) || resultArray.Length > 1)
+            if (resultArray.Length > 1 || !DateTime.TryParse(inputData, out dateTime))
             {
                 resultArray = resultArray.Select(s => s.ToLower().Trim(',', '.', '|')).
                                       TakeWhile(s => !s.Contains(':')).ToArray();
