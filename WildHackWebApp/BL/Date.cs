@@ -97,7 +97,7 @@ namespace WildHackWebApp.BL
 
         public string FullDate
         {
-            get { return $"{Day}.{Month}.{Year}"; }
+            get { return $"{Day:d2}.{Month:d2}.{Year:d4}"; }
         }
 
         public Date() { }
