@@ -6,7 +6,7 @@
     <timeline-map v-if="timeline" />
     <div class="container-timeline">
       <news-card
-        @click="openCardNews(content)"
+        @click="openOriginalSite(content.link)"
         v-for="content in $store.state.contents"
         :key="content"
         :cardContent="content"
@@ -36,6 +36,9 @@ export default {
   methods: {
     openCardNews(item) {
       this.$router.push(`/news/${item.title}`)
+    },
+    openOriginalSite(url) {
+      window.location.href = `${url}`
     },
     showTimeLine() {
       this.$store.dispatch('fetchTimelineData')

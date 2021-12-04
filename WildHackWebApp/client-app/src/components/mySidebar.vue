@@ -1,10 +1,9 @@
 <template>
   <div class="my-sidebar">
     <h6>Настроить ленту</h6>
-
     <ul class="collapsible">
       <li>
-        <div class="collapsible-header">
+        <div @click="$store.commit('addTestElement')" class="collapsible-header">
           <i class="material-icons">sync</i>
           Свежее
         </div>

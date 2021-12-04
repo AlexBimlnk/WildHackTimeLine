@@ -9,6 +9,14 @@ namespace WildHackWebApp.BL
     {
         private int[] _daysInMonths = { -1, 31, -1, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
+        public int[] DaysInMonths
+        {
+            get
+            {
+                return _daysInMonths;
+            }
+        }
+
         private Dictionary<string, int> _monthDict = new Dictionary<string, int>()
         {
             {"янв", 1}, {"фев", 2}, {"мар", 3}, {"апр", 4},
