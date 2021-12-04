@@ -65,7 +65,21 @@ export default createStore({
     setDataForTimeline(state, data) {
       state.dataForTimeline = data;
     },
+    setDataForLineNews(state, data) {
+      state.contents.push(data)
+    }
   },
-  actions: {},
+  actions: {
+    async fetchTimelineData(context) {
+      const res = await fetch('/api/EcologyEvents')
+      const data = await res.json()
+      context.commit('setDataForTimeline', data)
+    },
+    async fetchLineNews(context) {
+      const res = await fetch('/api/EcologyEvents')
+      const data = await res.json()
+      data.forEach(el => context.commit('setDataForLineNews', el))
+    }
+  },
   modules: {},
 });

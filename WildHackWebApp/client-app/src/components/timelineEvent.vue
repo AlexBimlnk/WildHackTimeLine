@@ -1,14 +1,16 @@
 <template>
   <div class="timeline-event">
-    <div class="card timeline-content">
-      <div class="card-content teal white-text">
-        <p>
-          {{ content.title }}
-        </p>
+    <a :href="content.link">
+      <div class="card timeline-content">
+        <div class="card-content teal white-text">
+          <p>
+            {{ content.title }}
+          </p>
+        </div>
       </div>
-    </div>
+    </a>
     <div class="timeline-badge red lighten-3 white-text"></div>
-    <div class="year">{{$store.state.dataForTimeline[0].date.fullDate}}</div>
+    <div class="year">{{ content.date }}</div>
   </div>
 </template>
 
@@ -24,7 +26,16 @@ export default {
 
 <style lang="less" scoped>
 @import url("../../node_modules/materialize-css/dist/css/materialize.min.css");
+.card {
+  background: rgba(0, 0, 0, 0) !important;
+  box-shadow: none;
+}
+.card-content {
+  background: rgba(0, 0, 0, 0) !important;
+  text-align: right;
+}
 .year {
+  color: #fff;
   display: block;
   position: absolute;
   width: 16px;
@@ -49,7 +60,7 @@ body {
     &::before {
       display: block;
       content: "";
-      width: 2px;
+      width: 1px;
       height: calc(50% - 30px);
       position: absolute;
       background: #d2d2d2;
@@ -59,7 +70,7 @@ body {
     &::after {
       display: block;
       content: "";
-      width: 2px;
+      width: 1px;
       height: calc(50% - 30px);
       position: absolute;
       background: #d2d2d2;
@@ -115,7 +126,18 @@ body {
     }
   }
 }
-
+.card {
+  width: 450px !important;
+  &::after {
+    content: "";
+    width: 120px;
+    background-color: #fff;
+    height: 1px;
+    position: absolute;
+    right: -130px;
+    top: 50%;
+  }
+}
 .card-title {
   // font-weight: 600!important;
   line-height: 1em;

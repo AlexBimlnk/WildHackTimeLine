@@ -1,9 +1,9 @@
 <template>
   <div class="home-page">
     <h1>Новостной портал по Камчатке</h1>
-    <button @click="showTimeLine">Показать таймлайн</button>
-    <button @click="hiddenTimeline">Скрыть таймлайн</button>
-    <timeline v-if="timeline" />
+    <!-- <button @click="showTimeLine">Показать таймлайн</button>
+    <button @click="hiddenTimeline">Скрыть таймлайн</button> -->
+    <timeline-map v-if="timeline" />
     <div class="container-timeline">
       <news-card
         @click="openCardNews(content)"
@@ -17,11 +17,16 @@
 
 <script>
 import newsCard from "../components/newsCard.vue";
-import timeline from "../components/timeline.vue"
+import timelineMap from "../components/timelineMap.vue";
+
 export default {
   components: {
     newsCard,
-    timeline
+    timelineMap,
+  },
+  mounted() {
+    this.$store.dispatch('fetchLineNews')
+    console.log(this.$store.state.contents)
   },
   data() {
     return {
@@ -33,6 +38,7 @@ export default {
       this.$router.push(`/news/${item.title}`)
     },
     showTimeLine() {
+      this.$store.dispatch('fetchTimelineData')
       this.timeline = true
     },
     clearTimeline() {
@@ -45,3 +51,10 @@ export default {
   },
 };
 </script>
+
+<style lang="less" scoped>
+h1 {
+  font-size: 40px;
+  text-align: center;
+}
+</style>

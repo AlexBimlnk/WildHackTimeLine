@@ -16,8 +16,8 @@
       </div>
       <div class="col m6 col-for-map">
         <div class="map">
-          <div  class="point point-west"></div>
-          <div  class="point point-east"></div>
+          <div class="point point-west"></div>
+          <div class="point point-east"></div>
         </div>
       </div>
     </div>
@@ -78,8 +78,8 @@ export default {
   overflow-y: scroll;
 }
 .map {
-  background: url("../assets/Karta.png") no-repeat center center;
-  background-size: 80%;
+  background: url("../assets/map1.png") no-repeat center center;
+  // background-size: 80%;
   width: 100%;
   height: 100%;
 }
