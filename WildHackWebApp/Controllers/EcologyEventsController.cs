@@ -66,7 +66,7 @@ namespace WildHackWebApp.Controllers
         // PUT: api/EcologyEvents/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEcologyEvent(long id, EcologyEvent ecologyEvent)
+        public async Task<IActionResult> PutEcologyEvent(long id, [FromBody] EcologyEvent ecologyEvent)
         {
             if (id != ecologyEvent.Id)
             {
