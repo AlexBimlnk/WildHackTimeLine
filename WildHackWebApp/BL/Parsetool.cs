@@ -77,7 +77,9 @@ namespace WildHackWebApp.BL
                 try
                 {
                     if (pageElement.PictureURL != null)
+                    {
                         ecoEvent.PictureLink = CheckURL(navigator.SelectSingleNode(pageElement.PictureURL).Value, pageElement);
+                    }
                 }
                 catch
                 {
