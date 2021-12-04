@@ -1,52 +1,66 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace WildHackWebApp.BL
 {
     [Serializable]
     public class Date
     {
-        private int[] daysInMonths = { -1, 31, -1, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+        private int[] _daysInMonths = { -1, 31, -1, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
-        private int day;
-        private int month;
-        private int year;
+        private Dictionary<string, int> _monthDict = new Dictionary<string, int>()
+        {
+            {"янв", 1}, {"фев", 2}, {"мар", 3}, {"апр", 4},
+            {"май", 5}, { "мая", 5}, {"июн", 6}, {"июл", 7}, {"авг", 8},
+            {"сен", 9}, {"окт", 10}, {"ноя", 11}, {"дек", 12}
+        };
+
+        private static Action<Date, string[]> _setDateDelegate = (example, arr) =>
+        {
+            if (arr.Length > 2)
+                example.TrySetYear(arr[2]);
+            else
+                example.Year = DateTime.Now.Year;
+            example.TrySetMonth(arr[1]);
+            example.TrySetDay(arr[0]);
+        };
+
+        private int _day;
+        private int _month;
+        private int _year;
+
         public int Day
         {
             set
             {
                 if (value < 1)
-                    day = -1;
+                    _day = -1;
                 else
                 {
-                    if (month == 2)
+                    if (_month == 2)
                     {
                         if (value < 29)
-                            day = value;
+                            _day = value;
                         else
                         {
-                            if (value == 29 && year % 4 == 0)
-                                day = 29;
+                            if (value == 29 && _year % 4 == 0)
+                                _day = 29;
                             else
-                                day = -1;
+                                _day = -1;
                         }
-                            
+
                     }
                     else
                     {
-                        if (value > daysInMonths[month])
-                            day = -1;
+                        if (value > _daysInMonths[_month])
+                            _day = -1;
                         else
-                            day = value;
+                            _day = value;
                     }
                 }
-            }
-            get
-            {
-                return day;
-            }
+            } 
+            get { return _day; }
         }
 
         public int Month
@@ -54,14 +68,11 @@ namespace WildHackWebApp.BL
             set
             {
                 if (value > 12 || value < 1)
-                    month = -1;
+                    _month = -1;
                 else
-                    month = value;
+                    _month = value;
             }
-            get
-            {
-                return month;
-            }
+            get { return _month; }
         }
 
         public int Year
@@ -69,31 +80,12 @@ namespace WildHackWebApp.BL
             set
             {
                 if (value > DateTime.Now.Year || value < 1)
-                    year = -1;
+                    _year = -1;
                 else
-                    year = value;
+                    _year = value;
             }
-            get
-            {
-                return year;
-            }
+            get { return _year; }
         }
-        private Dictionary<string, int> monthDict = new Dictionary<string, int>()
-        {
-            {"янв", 1}, {"фев", 2}, {"мар", 3}, {"апр", 4},
-            {"май", 5}, { "мая", 5}, {"июн", 6}, {"июл", 7}, {"авг", 8},
-            {"сен", 9}, {"окт", 10}, {"ноя", 11}, {"дек", 12}
-        };
-
-        private static Action<Date,string[]> setDateDelegate = (example, arr) =>
-        {
-            if (arr.Length > 2)
-                example.TrySetYear(arr[2]);
-            else
-                example.Year = 2021; //Здесь не доработано, нужно сетить год от сегодняшнего дня если он не указан
-            example.TrySetMonth(arr[1]);
-            example.TrySetDay(arr[0]);
-        };
 
         public string FullDate
         {
@@ -104,38 +96,49 @@ namespace WildHackWebApp.BL
 
         public Date(string data)
         {
-            GetDateFromData(data);
+            SetDateFromData(data);
         }
 
-        public void GetDateFromData(string inputData)
+        public void SetDateFromData(string inputData)
         {
-            string[] inputArray = inputData.Trim().Split(' ').
-                                  Select(s => s.ToLower().Trim(',', '.', '|')).
-                                  TakeWhile(s => !s.Contains(':')).ToArray();
-            //if(inputArray.)
-            if (inputArray.Length == 1)
-                inputArray = inputArray[0].Split('.');
-            setDateDelegate(this, inputArray);
+            inputData = inputData.Trim();
+            DateTime dateTime;
+            if (!DateTime.TryParse(inputData, out dateTime))
+            {
+                string[] inputArray = inputData.Split(' ').
+                                      Select(s => s.ToLower().Trim(',', '.', '|')).
+                                      TakeWhile(s => !s.Contains(':')).ToArray();
+
+                if (inputArray.Length == 1)
+                    inputArray = inputArray[0].Split('.');
+                _setDateDelegate(this, inputArray);
+            }
+            else
+            {
+                Day = dateTime.Day;
+                Month = dateTime.Month;
+                Year = dateTime.Year;
+            }
         }
 
-        private void TrySetDay(string day)
+        private void TrySetDay(string inputDay)
         {
-            Day = int.Parse(day);
+            Day = int.Parse(inputDay);
         }
-        private void TrySetMonth(string month)
+        private void TrySetMonth(string inputMonth)
         {
             int resultMonth = 0;
-            if(!int.TryParse(month, out resultMonth))
+            if(!int.TryParse(inputMonth, out resultMonth))
             {
-                string key = monthDict.Keys.First(s => month.Contains(s));
+                string key = _monthDict.Keys.First(s => inputMonth.Contains(s));
                 if (key != null)
-                    resultMonth = monthDict[key];
+                    resultMonth = _monthDict[key];
             }
             Month = resultMonth;
         }
-        private void TrySetYear(string year)
+        private void TrySetYear(string inputYear)
         {
-            Year = int.Parse(year);
+            Year = int.Parse(inputYear);
         }
     }
 }
