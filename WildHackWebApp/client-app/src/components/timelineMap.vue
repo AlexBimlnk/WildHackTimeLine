@@ -78,8 +78,8 @@ export default {
   overflow-y: scroll;
 }
 .map {
-  background: url("../assets/Karta.png") no-repeat center center;
-  background-size: 80%;
+  background: url("../assets/map1.png") no-repeat center center;
+  // background-size: 80%;
   width: 100%;
   height: 100%;
 }

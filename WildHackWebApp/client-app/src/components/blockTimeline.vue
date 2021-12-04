@@ -25,9 +25,9 @@ export default {
   background: linear-gradient(to bottom right, #05352d 0%, #233b19 100%);
 }
 .map-bg {
-  background: url("../assets/Karta.png") no-repeat center center;
-  background-size: 40%;
-  height: 100vh;
+  background: url("../assets/map9.png") no-repeat center center;
+  background-size: 80%;
+  height: 90vh;
 }
 .scroll-timeline {
   height: 100%;

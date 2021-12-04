@@ -31,6 +31,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.timeline {
+  height: 100vh;
+}
 .timeline-container {
   width: 1200px;
   margin: 0 auto;

@@ -1,6 +1,6 @@
 <template>
-  <div class="app">
-    <main-navbar />
+  <div class="app" :class="{'timeline-tab': $route.fullPath === '/timeline'}">
+    <main-navbar :isTimeline="$route.fullPath === '/timeline'" />
     <router-view />
   </div>
 </template>
@@ -17,9 +17,17 @@ export default {
 <style lang="less">
 .app {
   background-color: #F0F0F0;
+  padding-top: 112px;
 }
 .container-timeline {
   width: 650px;
   margin: 0 auto;
+}
+.timeline-tab {
+  height: 100vh;
+  overflow: hidden;
+}
+.collapsible-body, .collapsible-body p{
+  background-color: #F0F0F0;
 }
 </style>

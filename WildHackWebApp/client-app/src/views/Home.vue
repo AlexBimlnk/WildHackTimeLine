@@ -24,6 +24,10 @@ export default {
     newsCard,
     timelineMap,
   },
+  mounted() {
+    this.$store.dispatch('fetchLineNews')
+    console.log(this.$store.state.contents)
+  },
   data() {
     return {
       timeline: false,
