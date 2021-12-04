@@ -13,5 +13,6 @@ namespace WildHackWebApp.BL
         public string TitlePath { get; set; }
         public string TimePath { get; set; }
         public string LinkPath { get; set; }
+        public string PictureURL { get; set; }
     }
 }

@@ -31,5 +31,7 @@ namespace WildHackWebApp.Models
         /// Ссылка на событие
         /// </summary>
         public string Link { get; set; }
+
+        public string PictureLink { get; set; }
     }
 }
