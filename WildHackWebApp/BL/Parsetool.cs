@@ -55,25 +55,22 @@ namespace WildHackWebApp.BL
 
         private static async Task<List<EcologyEvent>> ParseSiteAsync(SiteName site, HtmlWeb client)
         {
-            HtmlDocument page = client.Load(siteDict[site].RequestURL);
-            string articlesPath = siteDict[site].ArticlesPath;
-            string titlePath = siteDict[site].TitlePath;
-            string timePath = siteDict[site].TimePath;
-            string linkPath = siteDict[site].LinkPath;
+            PageElement pageElement = siteDict[site];
+            HtmlDocument page = client.Load(pageElement.RequestURL);
 
-            var articles = page.DocumentNode.SelectNodes(articlesPath);
+            var articles = page.DocumentNode.SelectNodes(pageElement.ArticlesPath);
 
             List<EcologyEvent> resultList = new List<EcologyEvent>();
             foreach (var article in articles)
             {
                 EcologyEvent ecoEvent = new EcologyEvent();
                 var navigator = article.CreateNavigator();
-                ecoEvent.Title = navigator.SelectSingleNode(titlePath).Value;
-                try { ecoEvent.Date = new Date(navigator.SelectSingleNode(timePath).Value).FullDate;} catch { }
+                ecoEvent.Title = navigator.SelectSingleNode(pageElement.TitlePath).Value;
+                ecoEvent.Date = new Date(navigator.SelectSingleNode(pageElement.TimePath).Value).FullDate;
 
-                string link = navigator.SelectSingleNode(linkPath).Value;
-                if (!link.Contains(siteDict[site].SiteURL))
-                    ecoEvent.Link = siteDict[site].SiteURL + link.TrimStart('.');
+                string link = navigator.SelectSingleNode(pageElement.LinkPath).Value;
+                if (!link.Contains(pageElement.SiteUrl))
+                    ecoEvent.Link = pageElement.SiteURL + link.TrimStart('.');
                 else
                     ecoEvent.Link = link;
 

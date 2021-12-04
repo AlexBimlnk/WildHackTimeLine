@@ -90,22 +90,22 @@ namespace WildHackWebApp.BL
         public void SetDateFromData(string inputData)
         {
             inputData = inputData.Trim();
+            string[] resultArray = inputData.Split(' ');
             DateTime dateTime;
-            if (!DateTime.TryParse(inputData, out dateTime))
+            if (!DateTime.TryParse(inputData, out dateTime) || resultArray.Length > 1)
             {
-                string[] inputArray = inputData.Split(' ').
-                                      Select(s => s.ToLower().Trim(',', '.', '|')).
+                resultArray = resultArray.Select(s => s.ToLower().Trim(',', '.', '|')).
                                       TakeWhile(s => !s.Contains(':')).ToArray();
 
-                if (inputArray.Length == 1)
-                    inputArray = inputArray[0].Split('.');
-                _setDateDelegate(this, inputArray);
+                if (resultArray.Length == 1)
+                    resultArray = resultArray[0].Split('.');
+                _setDateDelegate(this, resultArray);
             }
             else
             {
-                Day = dateTime.Day;
-                Month = dateTime.Month;
                 Year = dateTime.Year;
+                Month = dateTime.Month; 
+                Day = dateTime.Day;
             }
         }
 
