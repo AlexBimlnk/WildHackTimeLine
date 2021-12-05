@@ -25,9 +25,10 @@ namespace WildHackWebApp.Controllers
                 List<EcologyEvent> ecologyEvents = task.Result;
                 foreach (var i in ecologyEvents)
                 {
-                    _context.Add(i);
+                    _context.EcologyEvents.Add(i);
+                    _context.SaveChanges();
+                    var temp = _context.EcologyEvents.ToList();
                 }
-                _context.SaveChanges();
             }
         }
 
@@ -49,9 +50,10 @@ namespace WildHackWebApp.Controllers
             Judge.SortByDate(Judge.CompareWithOld(ecologyEvents, await _context.EcologyEvents.ToListAsync()));
             foreach (var i in ecologyEvents)
             {
-                _context.Add(i);
+                _context.EcologyEvents.Add(i);
+                _context.SaveChanges();
             }
-            _context.SaveChanges();
+
             //var ecoEvn = ParseTool.GetDatasetAsync(DatasetOption.Init);
             return await _context.EcologyEvents.Skip(_context.EcologyEvents.Count() - 15).ToListAsync();
         }
@@ -60,7 +62,6 @@ namespace WildHackWebApp.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EcologyEvent>>> GetEcologyEvents()
         {
-            //var ecoEvn = ParseTool.GetDatasetAsync(DatasetOption.Init);
             return await _context.EcologyEvents.ToListAsync();
         }
 
