@@ -44,7 +44,10 @@ namespace WildHackWebApp.Controllers
                 _context.SaveChanges();
             }
 
-            return await _context.EcologyEvents.Skip(_context.EcologyEvents.Count() - 15).ToListAsync();
+            var list = await _context.EcologyEvents.Skip(_context.EcologyEvents.Count() - 15).ToListAsync();
+            list.Reverse();
+            
+            return list;
         }
 
         // GET: api/EcologyEvents
