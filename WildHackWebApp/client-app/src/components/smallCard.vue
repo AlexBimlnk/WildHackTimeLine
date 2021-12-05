@@ -52,30 +52,30 @@ export default {
   methods: {
     async like() {
       if (this.like_bool) {
+        console.log(JSON.stringify(this.cardContent))
         this.$store.commit("like", this.cardContent); // like во vuex
-        await fetch(`/api/EcologyEvents/${this.cardContent.id}`, {
+        console.log(JSON.stringify(this.cardContent))
+        await fetch(`/api/EcologyEvents/${this.cardContent.id}/rating/1`, {
           method: "PUT",
-          body: JSON.stringify(this.cardContent),
         });
-        this.like_bool = false;
-        this.dislike_bool = true;
-        if (this.startState === this.rating) {
-          this.resetResults();
-        }
+        // this.like_bool = false;
+        // this.dislike_bool = true;
+        // if (this.startState === this.rating) {
+        //   this.resetResults();
+        // }
       }
     },
     async dislike() {
       if (this.dislike_bool) {
         this.$store.commit("dislike", this.cardContent); // dislike во vuex
-        await fetch(`/api/EcologyEvents/${this.cardContent.id}`, {
+        await fetch(`/api/EcologyEvents/${this.cardContent.id}/rating/-1`, {
           method: "PUT",
-          body: JSON.stringify(this.cardContent),
         });
-        this.dislike_bool = false;
-        this.like_bool = true;
-        if (this.startState === this.rating) {
-          this.resetResults();
-        }
+        // this.dislike_bool = false;
+        // this.like_bool = true;
+        // if (this.startState === this.rating) {
+        //   this.resetResults();
+        // }
       }
     },
     resetResults() {

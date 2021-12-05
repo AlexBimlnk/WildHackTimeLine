@@ -9,7 +9,7 @@
         </div>
       </li>
       <li>
-        <div class="collapsible-header">
+        <div @click="sortToPopular" class="collapsible-header">
           <i class="material-icons">whatshot</i>
           Популярные
         </div>
@@ -49,6 +49,7 @@
 
 <script>
 import M from "../../node_modules/materialize-css/dist/js/materialize";
+import { popularSort } from "../js/popularSort";
 export default {
   mounted() {
     M.AutoInit();
@@ -64,8 +65,12 @@ export default {
       this.$store.dispatch("fetchFreshNews");
     },
     fetchAll() {
-      this.$store.dispatch("fetchTimelineData")
-    }
+      this.$store.dispatch("fetchTimelineData");
+    },
+    sortToPopular() {
+      const sortedArray = popularSort(this.$store.state.dataForTimeline);
+      this.$store.commit('setDataForTimeline', sortedArray.reverse())
+    },
   },
 };
 </script>

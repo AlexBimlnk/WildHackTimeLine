@@ -4,15 +4,7 @@ export default createStore({
   state: {
     // Для таймлайна
     dataForTimeline: [],
-    // Для ленты
-    contents: [
-      {
-        title: "Камчатка новости",
-        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas minima eum provident illum praesentium, unde ipsa sit assumenda,",
-        img: require("../assets/testPicture.jpg"),
-        year: 2019,
-      },
-    ],
+    // Для ленты (deleted)
 
     // Для цветов
     maxRating: 0,
@@ -20,14 +12,14 @@ export default createStore({
   },
   mutations: {
     like(state, obj) {
-      state.contents.forEach(el => {
+      state.dataForTimeline.forEach(el => {
         if (el === obj) {
           el.rating++
         }
       })
     },
     dislike(state, obj) {
-      state.contents.forEach(el => {
+      state.dataForTimeline.forEach(el => {
         if (el === obj) {
           el.rating--;
         }
@@ -86,7 +78,7 @@ export default createStore({
       const data = await res.json();
       context.commit("setDataForTimeline", data);
       // Тестовое заполнение рейтинга для цвета кружков
-      context.commit("setRandomRating");
+      // context.commit("setRandomRating");
       // Нормализуем цвета в отельном массиве
       // context.commit("setNormalizeColor");
     },

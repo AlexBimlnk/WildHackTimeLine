@@ -30,6 +30,7 @@ export default {
     if (this.$store.state.dataForTimeline.length === 0) {
       this.$store.dispatch("fetchTimelineData");
     }
+    console.log(this.$store.state.dataForTimeline)
   },
   data() {
     return {
