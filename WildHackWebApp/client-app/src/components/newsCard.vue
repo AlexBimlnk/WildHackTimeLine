@@ -16,11 +16,12 @@
     <div @click.stop class="reaction withPadding">
       <span @click="like" class="material-icons"> expand_less </span>
       <p
-        :class="{ like: rating > 0, useless: rating < 0, common: rating === 0 }"
+        :class="{ like: cardContent.rating > 0, useless: cardContent.rating < 0, common: cardContent.rating === 0 }"
       >
-        {{ rating }}
+        {{ cardContent.rating }}
       </p>
       <span @click="dislike" class="material-icons"> expand_more </span>
+      <span>{{ cardContent.date }}</span>
     </div>
   </div>
 </template>
@@ -41,30 +42,38 @@ export default {
     };
   },
   methods: {
-    like() {
+    async like() {
       if (this.like_bool) {
-        this.rating++;
+        this.$store.commit("like", this.cardContent); // like во vuex
+        await fetch(`/api/EcologyEvents/${this.cardContent.id}`, {
+          method: "PUT",
+          body: JSON.stringify(this.cardContent),
+        });
         this.like_bool = false;
         this.dislike_bool = true;
         if (this.startState === this.rating) {
-          this.resetResults()
+          this.resetResults();
         }
       }
     },
-    dislike() {
+    async dislike() {
       if (this.dislike_bool) {
-        this.rating--;
+        this.$store.commit("dislike", this.cardContent); // like во vuex
+        await fetch(`/api/EcologyEvents/${this.cardContent.id}`, {
+          method: "PUT",
+          body: JSON.stringify(this.cardContent),
+        });
         this.dislike_bool = false;
         this.like_bool = true;
         if (this.startState === this.rating) {
-          this.resetResults()
+          this.resetResults();
         }
       }
     },
     resetResults() {
       this.like_bool = true;
       this.dislike_bool = true;
-    }
+    },
   },
   // watch: {
   //   rating(rating, prev) {

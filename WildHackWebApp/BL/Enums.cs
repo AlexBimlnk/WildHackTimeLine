@@ -9,7 +9,8 @@ namespace WildHackWebApp.BL
     {
         PoluostrovKamchatka,
         Ria,
-        GoogleNews
+        GoogleNews,
+        Kronoki
     }
 
     public enum DatasetOption

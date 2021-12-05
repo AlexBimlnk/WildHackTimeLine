@@ -4,22 +4,27 @@ export default createStore({
   state: {
     // Для таймлайна
     dataForTimeline: [],
-
-    // Для ленты
-    contents: [
-      {
-        title: "Камчатка новости",
-        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas minima eum provident illum praesentium, unde ipsa sit assumenda,",
-        img: require("../assets/testPicture.jpg"),
-        year: 2019,
-      },
-    ],
+    // Для ленты (deleted)
 
     // Для цветов
     maxRating: 0,
     minRating: 10,
   },
   mutations: {
+    like(state, obj) {
+      state.dataForTimeline.forEach(el => {
+        if (el === obj) {
+          el.rating++
+        }
+      })
+    },
+    dislike(state, obj) {
+      state.dataForTimeline.forEach(el => {
+        if (el === obj) {
+          el.rating--;
+        }
+      })
+    },
     changeMax(state, el) {
       state.maxRating = el;
     },
@@ -73,14 +78,19 @@ export default createStore({
       const data = await res.json();
       context.commit("setDataForTimeline", data);
       // Тестовое заполнение рейтинга для цвета кружков
-      context.commit("setRandomRating");
+      // context.commit("setRandomRating");
       // Нормализуем цвета в отельном массиве
-      context.commit("setNormalizeColor");
+      // context.commit("setNormalizeColor");
     },
     async fetchLineNews(context) {
       const res = await fetch("/api/EcologyEvents");
       const data = await res.json();
       data.forEach((el) => context.commit("setDataForLineNews", el));
+    },
+    async fetchFreshNews(context) {
+      const res = await fetch("/api/EcologyEvents/new");
+      const data = await res.json();
+      context.commit('setDataForTimeline', data)
     },
   },
   modules: {},

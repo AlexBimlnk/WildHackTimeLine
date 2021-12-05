@@ -17,9 +17,9 @@
         </div>
         <div class="nav-content">
           <ul class="tabs tabs-transparent">
-            <li class="tab"><router-link to="/">Лента</router-link></li>
+            <li class="tab"><router-link to="/news">Лента</router-link></li>
             <li class="tab">
-              <router-link to="/timeline">Таймлайн</router-link>
+              <router-link to="/">Таймлайн</router-link>
             </li>
             <li class="tab">
               <router-link to="/newPost">Предложить пост</router-link>

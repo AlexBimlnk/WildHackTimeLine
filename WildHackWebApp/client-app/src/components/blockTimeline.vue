@@ -22,7 +22,7 @@ export default {
   background: linear-gradient(to bottom right, #05352d 0%, #233b19 100%);
 }
 .map-bg {
-  background: url("../assets/map9.png") no-repeat center center;
+  background: url("../assets/map11.png") no-repeat center center;
   background-size: 80%;
   height: 90vh;
 }
