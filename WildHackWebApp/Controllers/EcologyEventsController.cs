@@ -32,17 +32,7 @@ namespace WildHackWebApp.Controllers
             }
         }
 
-        // GET: api/EcologyEvents
-        [HttpGet("test")]
-        public async Task<IEnumerable<EcologyEvent>> GetEcologyEvents1()
-        {
-            //return await ParseTool.GetDatasetAsync(DatasetOption.Update);
-            List<EcologyEvent> list = await _context.EcologyEvents.ToListAsync();
-
-            return list.Where(ecEvent => ecEvent.Link == "https://ria.ru/20211111/oleni-1758491544.html").ToList();
-        }
-
-        // GET: api/EcologyEvents
+        // GET: api/EcologyEvents/new
         [HttpGet("new")]
         public async Task<ActionResult<IEnumerable<EcologyEvent>>> GetNewEcologyEvents()
         {
@@ -61,18 +51,6 @@ namespace WildHackWebApp.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EcologyEvent>>> GetEcologyEvents()
         {
-            //List<int> list = new List<int>();
-            //for(int i = 0; i< 10; i++)
-            //{
-            //    list.Add(i);
-            //}
-
-            //var l1 = list.Take(5).ToList();
-            //l1 = list.Take(15).ToList();
-            //l1 = list.Skip(5).Take(5).ToList();
-            //l1 = list.Skip(5).Take(15).ToList();
-            //l1 = list.Skip(15).Take(15).ToList();
-
             var list = await _context.EcologyEvents.ToListAsync();
             list.Reverse();
 
@@ -93,6 +71,7 @@ namespace WildHackWebApp.Controllers
             return ecologyEvent;
         }
 
+        // PUT: api/EcologyEvents/5/rating/1
         [HttpPut("{id}/rating/{value}")]
         public async Task<IActionResult> PutEcologyEvent(long id, int value)
         {
@@ -120,64 +99,6 @@ namespace WildHackWebApp.Controllers
                     throw;
                 }
             }
-
-            return NoContent();
-        }
-
-        // PUT: api/EcologyEvents/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutEcologyEvent(long id, [FromBody] EcologyEvent ecologyEvent)
-        {
-            if (id != ecologyEvent.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(ecologyEvent).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EcologyEventExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/EcologyEvents
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<EcologyEvent>> PostEcologyEvent(EcologyEvent ecologyEvent)
-        {
-            _context.EcologyEvents.Add(ecologyEvent);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        // DELETE: api/EcologyEvents/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEcologyEvent(long id)
-        {
-            var ecologyEvent = await _context.EcologyEvents.FindAsync(id);
-            if (ecologyEvent == null)
-            {
-                return NotFound();
-            }
-
-            _context.EcologyEvents.Remove(ecologyEvent);
-            await _context.SaveChangesAsync();
 
             return NoContent();
         }
