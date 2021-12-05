@@ -15,6 +15,7 @@ namespace WildHackWebApp.Controllers
     public class EcologyEventsController : ControllerBase
     {
         private readonly EcologyEventContext _context;
+        private readonly int _countLastEvents = 15;
 
         public EcologyEventsController(EcologyEventContext context)
         {
@@ -32,6 +33,30 @@ namespace WildHackWebApp.Controllers
             }
         }
 
+        // GET: api/EcologyEvents/after/15/15
+        [HttpGet("after/{countNow}/{countTake}")]
+        public async Task<ActionResult<IEnumerable<EcologyEvent>>> GetPartEcologyEvents(int countNow, int countTake)
+        {
+            var list = await _context.EcologyEvents.
+                            Skip(_context.EcologyEvents.Count() - countNow - countTake)
+                            .Take(countTake).ToListAsync();
+            list.Reverse();
+
+            return list;
+        }
+
+        // GET: api/EcologyEvents/after/15
+        [HttpGet("after/{countNow}")]
+        public async Task<ActionResult<IEnumerable<EcologyEvent>>> GetPartEcologyEvents(int countNow)
+        {
+            var list = await _context.EcologyEvents.
+                            Skip(_context.EcologyEvents.Count() - countNow - _countLastEvents)
+                            .Take(_countLastEvents).ToListAsync();
+            list.Reverse();
+
+            return list;
+        }
+
         // GET: api/EcologyEvents/new
         [HttpGet("new")]
         public async Task<ActionResult<IEnumerable<EcologyEvent>>> GetNewEcologyEvents()
@@ -44,7 +69,7 @@ namespace WildHackWebApp.Controllers
                 _context.SaveChanges();
             }
 
-            var list = await _context.EcologyEvents.Skip(_context.EcologyEvents.Count() - 15).ToListAsync();
+            var list = await _context.EcologyEvents.Skip(_context.EcologyEvents.Count() - _countLastEvents).ToListAsync();
             list.Reverse();
             
             return list;
