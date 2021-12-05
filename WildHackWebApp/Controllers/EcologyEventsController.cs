@@ -15,7 +15,7 @@ namespace WildHackWebApp.Controllers
     public class EcologyEventsController : ControllerBase
     {
         private readonly EcologyEventContext _context;
-        private readonly int _countLastEvents = 15;
+        private readonly int _countTakeToPartEvents = 15;
 
         public EcologyEventsController(EcologyEventContext context)
         {
@@ -37,9 +37,17 @@ namespace WildHackWebApp.Controllers
         [HttpGet("after/{countNow}/{countTake}")]
         public async Task<ActionResult<IEnumerable<EcologyEvent>>> GetPartEcologyEvents(int countNow, int countTake)
         {
+            int countTakeElements = 0;
+            int countSkipElements = 0;
+
+            SetTakeAndSkipCount(countNow, countTake, out countTakeElements, out countSkipElements);
+
+            if (countSkipElements == -1 || countTakeElements == -1)
+                return null;
+
             var list = await _context.EcologyEvents.
-                            Skip(_context.EcologyEvents.Count() - countNow - countTake)
-                            .Take(countTake).ToListAsync();
+                            Skip(countSkipElements)
+                            .Take(countTakeElements).ToListAsync();
             list.Reverse();
 
             return list;
@@ -49,9 +57,17 @@ namespace WildHackWebApp.Controllers
         [HttpGet("after/{countNow}")]
         public async Task<ActionResult<IEnumerable<EcologyEvent>>> GetPartEcologyEvents(int countNow)
         {
+            int countTakeElements = 0;
+            int countSkipElements = 0;
+
+            SetTakeAndSkipCount(countNow, _countTakeToPartEvents, out countTakeElements, out countSkipElements);
+
+            if (countSkipElements == -1 || countTakeElements == -1)
+                return null;
+
             var list = await _context.EcologyEvents.
-                            Skip(_context.EcologyEvents.Count() - countNow - _countLastEvents)
-                            .Take(_countLastEvents).ToListAsync();
+                            Skip(countSkipElements)
+                            .Take(countTakeElements).ToListAsync();
             list.Reverse();
 
             return list;
@@ -69,7 +85,7 @@ namespace WildHackWebApp.Controllers
                 _context.SaveChanges();
             }
 
-            var list = await _context.EcologyEvents.Skip(_context.EcologyEvents.Count() - _countLastEvents).ToListAsync();
+            var list = await _context.EcologyEvents.Skip(_context.EcologyEvents.Count() - _countTakeToPartEvents).ToListAsync();
             list.Reverse();
             
             return list;
@@ -134,6 +150,25 @@ namespace WildHackWebApp.Controllers
         private bool EcologyEventExists(long id)
         {
             return _context.EcologyEvents.Any(e => e.Id == id);
+        }
+
+        private void SetTakeAndSkipCount(int countNow, int countTake, out int countTakeElements, out int countSkipElements)
+        {
+            int countHiddenElements = _context.EcologyEvents.Count() - countNow;
+            countTakeElements = 0;
+
+            if (countHiddenElements <= 0)
+            {
+                countTakeElements = -1;
+                countSkipElements = -1;
+                return;
+            }
+            if (countHiddenElements - countTake < 0)
+                countTakeElements = countHiddenElements;
+            else
+                countTakeElements = countTake;
+
+            countSkipElements = countHiddenElements - countTakeElements;
         }
     }
 }
