@@ -54,7 +54,6 @@ namespace WildHackWebApp.Controllers
                 _context.SaveChanges();
             }
 
-            //var ecoEvn = ParseTool.GetDatasetAsync(DatasetOption.Init);
             return await _context.EcologyEvents.Skip(_context.EcologyEvents.Count() - 15).ToListAsync();
         }
 
@@ -62,7 +61,22 @@ namespace WildHackWebApp.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EcologyEvent>>> GetEcologyEvents()
         {
-            return await _context.EcologyEvents.ToListAsync();
+            //List<int> list = new List<int>();
+            //for(int i = 0; i< 10; i++)
+            //{
+            //    list.Add(i);
+            //}
+
+            //var l1 = list.Take(5).ToList();
+            //l1 = list.Take(15).ToList();
+            //l1 = list.Skip(5).Take(5).ToList();
+            //l1 = list.Skip(5).Take(15).ToList();
+            //l1 = list.Skip(15).Take(15).ToList();
+
+            var list = await _context.EcologyEvents.ToListAsync();
+            list.Reverse();
+
+            return list;
         }
 
         // GET: api/EcologyEvents/5
@@ -77,6 +91,37 @@ namespace WildHackWebApp.Controllers
             }
 
             return ecologyEvent;
+        }
+
+        [HttpPut("{id}/rating/{value}")]
+        public async Task<IActionResult> PutEcologyEvent(long id, int value)
+        {
+            var ecologyEvent = await _context.EcologyEvents.FindAsync(id);
+            if (ecologyEvent == null)
+            {
+                return NotFound();
+            }
+
+            ecologyEvent.Rating += value;
+            _context.Entry(ecologyEvent).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!EcologyEventExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
         }
 
         // PUT: api/EcologyEvents/5
