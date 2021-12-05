@@ -11,6 +11,9 @@
         :key="content"
         :cardContent="content"
       />
+      <div class="end-line">
+        <button @click="showMore" class="show-more">Показать больше</button>
+      </div>
     </div>
   </div>
 </template>
@@ -28,7 +31,7 @@ export default {
   },
   mounted() {
     if (this.$store.state.dataForTimeline.length === 0) {
-      this.$store.dispatch("fetchTimelineData");
+      this.$store.dispatch("fetchTimelineFullData"); // Убрать
     }
     console.log(this.$store.state.dataForTimeline)
   },
@@ -38,6 +41,9 @@ export default {
     };
   },
   methods: {
+    async showMore() {
+      await this.$store.dispatch('fetchTimeLineSomePart', this.$store.state.dataForTimeline.length)
+    },
     openCardNews(item) {
       this.$router.push(`/news/${item.title}`);
     },
@@ -60,6 +66,18 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.end-line {
+  width: 100%;
+  text-align: center;
+}
+.show-more {
+  padding: 15px 20px;
+  background-color: #05352d;
+  margin: 20px auto;
+  text-align: center;
+  color: #fff;
+  border-radius: 10px;
+}
 h1 {
   font-size: 40px;
   text-align: center;

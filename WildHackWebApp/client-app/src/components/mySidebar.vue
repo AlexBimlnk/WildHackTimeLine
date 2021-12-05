@@ -67,20 +67,20 @@ export default {
       this.$store.dispatch("fetchFreshNews");
     },
     fetchAll() {
-      this.$store.dispatch("fetchTimelineData");
+      this.$store.dispatch("fetchTimelineFullData");
     },
     sortToPopular() {
       const sortedArray = popularSort(this.$store.state.dataForTimeline);
-      this.$store.commit("setDataForTimeline", sortedArray.reverse());
+      this.$store.commit("fetchTimelineFullData", sortedArray.reverse());
     },
     async sortOnDates() {
-      await this.$store.dispatch("fetchTimelineData");
+      await this.$store.dispatch("fetchTimelineFullData");
       const sorted = sortOnInputDates(
         this.$store.state.dataForTimeline,
         this.startDate,
         this.endDate
       );
-      this.$store.commit("setDataForTimeline", sorted);
+      this.$store.commit("fetchTimelineFullData", sorted);
     },
   },
 };

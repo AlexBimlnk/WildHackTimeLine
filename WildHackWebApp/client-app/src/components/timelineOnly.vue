@@ -9,6 +9,9 @@
             :content="content"
           />
         </transition-group>
+        <div class="end-line">
+          <button @click="showMore" class="show-more">Показать больше</button>
+        </div>
       </div>
     </div>
   </div>
@@ -33,10 +36,27 @@ export default {
       return ratings.map((rating) => (rating - min) * 100) / (max - min);
     },
   },
+  methods: {
+    async showMore() {
+      await this.$store.dispatch('fetchTimeLineSomePart', this.$store.state.dataForTimeline.length)
+    },
+  }
 };
 </script>
 
 <style lang="less" scoped>
+.end-line {
+  width: 100%;
+  text-align: center;
+}
+.show-more {
+  padding: 15px 20px;
+  background-color: #03463a;
+  margin: 20px auto;
+  text-align: center;
+  color: #fff;
+  border-radius: 10px;
+}
 .timeline {
   height: 100vh;
 }

@@ -54,6 +54,9 @@ export default createStore({
     setDataForTimeline(state, data) {
       state.dataForTimeline = data;
     },
+    pushDataIntoDinamicTimeline(state, event) {
+      state.dataForTimeline.push(event)
+    },
     setDataForLineNews(state, data) {
       state.contents.push(data);
     },
@@ -73,7 +76,7 @@ export default createStore({
     },
   },
   actions: {
-    async fetchTimelineData(context) {
+    async fetchTimelineFullData(context) {
       const res = await fetch("/api/EcologyEvents");
       const data = await res.json();
       context.commit("setDataForTimeline", data);
@@ -82,11 +85,18 @@ export default createStore({
       // Нормализуем цвета в отельном массиве
       // context.commit("setNormalizeColor");
     },
+    async fetchTimeLineSomePart(context, lastIndex) {
+      const res = await fetch(`/api/EcologyEvents/after/${lastIndex}`);
+      const data = await res.json();
+      data.forEach(e => context.commit("pushDataIntoDinamicTimeline", e));
+    },
+
     async fetchLineNews(context) {
       const res = await fetch("/api/EcologyEvents");
       const data = await res.json();
       data.forEach((el) => context.commit("setDataForLineNews", el));
     },
+    
     async fetchFreshNews(context) {
       const res = await fetch("/api/EcologyEvents/new");
       const data = await res.json();

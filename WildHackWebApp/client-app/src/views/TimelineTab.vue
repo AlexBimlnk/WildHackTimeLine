@@ -9,7 +9,7 @@ import blockTimeline from "../components/blockTimeline.vue";
 export default {
   mounted() {
     if (this.$store.state.dataForTimeline.length === 0) {
-      this.$store.dispatch("fetchTimelineData");
+      this.$store.dispatch("fetchTimeLineSomePart", this.$store.state.dataForTimeline.length);
     }
   },
   components: {
