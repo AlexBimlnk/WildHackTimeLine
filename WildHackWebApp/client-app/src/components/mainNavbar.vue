@@ -17,11 +17,11 @@
         </div>
         <div class="nav-content">
           <ul class="tabs tabs-transparent">
-            <li class="tab"><router-link to="/news">Лента</router-link></li>
-            <li class="tab">
+            <li @click="isSidebar = false" class="tab"><router-link to="/news">Лента</router-link></li>
+            <li @click="isSidebar = false" class="tab">
               <router-link to="/">Таймлайн</router-link>
             </li>
-            <li class="tab">
+            <li @click="isSidebar = false" class="tab">
               <router-link to="/newPost">Предложить пост</router-link>
             </li>
           </ul>
