@@ -88,15 +88,11 @@ namespace WildHackWebApp
             {
                 app.UseDeveloperExceptionPage();
             }
-
             app.UseSpaStaticFiles();
-
             app.UseRouting();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-
                 endpoints.MapToVueCliProxy(
                     "{*path}",
                     new SpaOptions { SourcePath = "client-app" },
@@ -112,68 +108,68 @@ namespace WildHackWebApp
 
 // NEW STARTUP HMR
 
-// namespace WildHackWebApp
-// {
-//     public class Startup
-//     {
-//         public Startup(IConfiguration configuration)
-//         {
-//             Configuration = configuration;
-//         }
+//namespace WildHackWebApp
+//{
+    //public class Startup
+    //{
+        //public Startup(IConfiguration configuration)
+        //{
+            //Configuration = configuration;
+        //}
 
-//         public IConfiguration Configuration { get; }
+        //public IConfiguration Configuration { get; }
 
-//         // This method gets called by the runtime. Use this method to add services to the container.
-//         public void ConfigureServices(IServiceCollection services)
-//         {
-//             services.AddControllers();
-//             services.AddControllersWithViews();
+        //// This method gets called by the runtime. Use this method to add services to the container.
+        //public void ConfigureServices(IServiceCollection services)
+        //{
+            //services.AddControllers();
+            //services.AddControllersWithViews();
 
-//             services.AddDbContext<EcologyEventContext>(opt => opt.UseSqlServer($"Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=EcologyEventDB;Integrated Security=True"));
-//             // In production, the React files will be served from this directory
-//             services.AddSpaStaticFiles(configuration =>
-//             {
-//                 configuration.RootPath = "client-app/dist";
-//             });
-//         }
+            //services.AddDbContext<EcologyEventContext>(opt => opt.UseSqlServer($"Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=EcologyEventDB;Integrated Security=True"));
+            //// In production, the React files will be served from this directory
+            //services.AddSpaStaticFiles(configuration =>
+            //{
+                //configuration.RootPath = "client-app/dist";
+            //});
+        //}
 
-//         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-//         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-//         {
-//             if (env.IsDevelopment())
-//             {
-//                 app.UseDeveloperExceptionPage();
-//             }
-//             else
-//             {
-//                 app.UseExceptionHandler("/Error");
-//                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-//                 app.UseHsts();
-//             }
+        //// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        //public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        //{
+            //if (env.IsDevelopment())
+            //{
+                //app.UseDeveloperExceptionPage();
+            //}
+            //else
+            //{
+                //app.UseExceptionHandler("/Error");
+                //// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                //app.UseHsts();
+            //}
 
-//             app.UseHttpsRedirection();
-//             app.UseStaticFiles();
-//             app.UseSpaStaticFiles();
+            //app.UseHttpsRedirection();
+            //app.UseStaticFiles();
+            //app.UseSpaStaticFiles();
 
-//             app.UseRouting();
+            //app.UseRouting();
 
-//             app.UseEndpoints(endpoints =>
-//             {
-//                 endpoints.MapControllerRoute(
-//                     name: "default",
-//                     pattern: "{controller}/{action=Index}/{id?}");
-//             });
+            //app.UseEndpoints(endpoints =>
+            //{
+                //endpoints.MapControllerRoute(
+                    //name: "default",
+                    //pattern: "{controller}/{action=Index}/{id?}");
+            //});
 
-//             app.UseSpa(spa =>
-//             {
-//                 spa.Options.SourcePath = "client-app";
+            //app.UseSpa(spa =>
+            //{
+                //spa.Options.SourcePath = "client-app";
 
-//                 if (env.IsDevelopment())
-//                 {
-//                     spa.UseVueCli(npmScript: "serve", port: 8080);
-//                 }
-//             });
-//         }
-//     }
-// }
+                //if (env.IsDevelopment())
+                //{
+                    //spa.UseVueCli(npmScript: "serve", port: 8080);
+                //}
+            //});
+        //}
+    //}
+//}
 
