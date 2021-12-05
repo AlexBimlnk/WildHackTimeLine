@@ -5,9 +5,9 @@
     <button @click="hiddenTimeline">Скрыть таймлайн</button> -->
     <timeline-map v-if="timeline" />
     <div class="container-timeline">
-      <news-card
+      <small-card
         @click="openOriginalSite(content.link)"
-        v-for="content in $store.state.contents"
+        v-for="content in $store.state.dataForTimeline"
         :key="content"
         :cardContent="content"
       />
@@ -16,17 +16,20 @@
 </template>
 
 <script>
-import newsCard from "../components/newsCard.vue";
+// import newsCard from "../components/newsCard.vue";
+import smallCard from "../components/smallCard.vue"
 import timelineMap from "../components/timelineMap.vue";
 
 export default {
   components: {
-    newsCard,
+    // newsCard,
     timelineMap,
+    smallCard,
   },
   mounted() {
-    this.$store.dispatch('fetchLineNews')
-    console.log(this.$store.state.contents)
+    if (this.$store.state.dataForTimeline.length === 0) {
+      this.$store.dispatch("fetchTimelineData");
+    }
   },
   data() {
     return {
@@ -35,22 +38,22 @@ export default {
   },
   methods: {
     openCardNews(item) {
-      this.$router.push(`/news/${item.title}`)
+      this.$router.push(`/news/${item.title}`);
     },
     openOriginalSite(url) {
-      window.location.href = `${url}`
+      window.location.href = `${url}`;
     },
     showTimeLine() {
-      this.$store.dispatch('fetchTimelineData')
-      this.timeline = true
+      this.$store.dispatch("fetchTimelineData");
+      this.timeline = true;
     },
     clearTimeline() {
-      this.$store.commit('clearTimeline')
+      this.$store.commit("clearTimeline");
     },
     hiddenTimeline() {
       // this.clearTimeline()
-      this.timeline = false
-    }
+      this.timeline = false;
+    },
   },
 };
 </script>

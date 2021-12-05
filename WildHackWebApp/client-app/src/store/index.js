@@ -4,7 +4,6 @@ export default createStore({
   state: {
     // Для таймлайна
     dataForTimeline: [],
-
     // Для ленты
     contents: [
       {
@@ -20,6 +19,20 @@ export default createStore({
     minRating: 10,
   },
   mutations: {
+    like(state, obj) {
+      state.contents.forEach(el => {
+        if (el === obj) {
+          el.rating++
+        }
+      })
+    },
+    dislike(state, obj) {
+      state.contents.forEach(el => {
+        if (el === obj) {
+          el.rating--;
+        }
+      })
+    },
     changeMax(state, el) {
       state.maxRating = el;
     },
@@ -75,12 +88,17 @@ export default createStore({
       // Тестовое заполнение рейтинга для цвета кружков
       context.commit("setRandomRating");
       // Нормализуем цвета в отельном массиве
-      context.commit("setNormalizeColor");
+      // context.commit("setNormalizeColor");
     },
     async fetchLineNews(context) {
       const res = await fetch("/api/EcologyEvents");
       const data = await res.json();
       data.forEach((el) => context.commit("setDataForLineNews", el));
+    },
+    async fetchFreshNews(context) {
+      const res = await fetch("/api/EcologyEvents/new");
+      const data = await res.json();
+      context.commit('setDataForTimeline', data)
     },
   },
   modules: {},

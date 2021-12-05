@@ -1,27 +1,35 @@
 <template>
   <div class="card">
     <div class="withPadding">
-      <div class="card-title">
-        <h5>{{ cardContent.title }}</h5>
+      <div class="date">
+        <span>{{ cardContent.date }}</span>
       </div>
-      <div class="description">
-        <p>
-          {{ cardContent.text }}
+      <div class="row">
+        <div class="col" :class="{m7: cardContent.pictureLink !== null, m12: cardContent.pictureLink === null}">
+          <div class="card-title">
+            <h5>{{ cardContent.title }}</h5>
+          </div>
+        </div>
+        <div class="col m5">
+          <div class="img-block">
+            <img :src="cardContent.pictureLink" alt="" />
+          </div>
+        </div>
+      </div>
+
+      <div @click.stop class="reaction withPadding">
+        <span @click="like" class="material-icons"> expand_less </span>
+        <p
+          :class="{
+            like: cardContent.rating > 0,
+            useless: cardContent.rating < 0,
+            common: cardContent.rating === 0,
+          }"
+        >
+          {{ cardContent.rating }}
         </p>
+        <span @click="dislike" class="material-icons"> expand_more </span>
       </div>
-    </div>
-    <div class="img-block">
-      <img :src="cardContent.pictureLink" alt="" />
-    </div>
-    <div @click.stop class="reaction withPadding">
-      <span @click="like" class="material-icons"> expand_less </span>
-      <p
-        :class="{ like: cardContent.rating > 0, useless: cardContent.rating < 0, common: cardContent.rating === 0 }"
-      >
-        {{ cardContent.rating }}
-      </p>
-      <span @click="dislike" class="material-icons"> expand_more </span>
-      <span>{{ cardContent.date }}</span>
     </div>
   </div>
 </template>
@@ -58,7 +66,7 @@ export default {
     },
     async dislike() {
       if (this.dislike_bool) {
-        this.$store.commit("dislike", this.cardContent); // like во vuex
+        this.$store.commit("dislike", this.cardContent); // dislike во vuex
         await fetch(`/api/EcologyEvents/${this.cardContent.id}`, {
           method: "PUT",
           body: JSON.stringify(this.cardContent),
@@ -75,19 +83,6 @@ export default {
       this.dislike_bool = true;
     },
   },
-  // watch: {
-  //   rating(rating, prev) {
-  //     console.log(rating, prev);
-  //     if (rating > prev) {
-  //       this.dislike_bool = false;
-  //       this.like_bool = true;
-  //       // if (firstClick)
-  //     } else {
-  //       this.like_bool = false;
-  //       this.dislike_bool = true;
-  //     }
-  //   },
-  // },
 };
 </script>
 
@@ -146,5 +141,6 @@ export default {
 }
 img {
   width: 100%;
+  border-radius: 10px;
 }
 </style>

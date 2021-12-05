@@ -1,11 +1,15 @@
 <template>
-  <div class="app" :class="{'timeline-tab': $route.fullPath === '/timeline'}">
-    <main-navbar :isTimeline="$route.fullPath === '/timeline'" />
+  <div class="app" :class="{'timeline-tab': $route.fullPath === '/'}">
+    <main-navbar :isTimeline="$route.fullPath === '/'" />
     <router-view />
   </div>
 </template>
 
 <script>
+// [] 1. Переделать лайки (отправлять action)
+// [] 2. Новости в хронологическом порядке
+// [] 3.
+
 import mainNavbar from "./components/mainNavbar.vue"
 export default {
   components: {

@@ -3,7 +3,7 @@
     <h6>Настроить ленту</h6>
     <ul class="collapsible">
       <li>
-        <div @click="$store.commit('addTestElement')" class="collapsible-header">
+        <div @click="fetchFresh" class="collapsible-header">
           <i class="material-icons">sync</i>
           Свежее
         </div>
@@ -37,6 +37,12 @@
           </div>
         </div>
       </li>
+      <li>
+        <div @click="fetchAll" class="collapsible-header">
+          <i class="material-icons">apps</i>
+          Все новости
+        </div>
+      </li>
     </ul>
   </div>
 </template>
@@ -53,6 +59,14 @@ export default {
       endDate: "",
     };
   },
+  methods: {
+    fetchFresh() {
+      this.$store.dispatch("fetchFreshNews");
+    },
+    fetchAll() {
+      this.$store.dispatch("fetchTimelineData")
+    }
+  },
 };
 </script>
 
@@ -68,7 +82,7 @@ h6 {
 }
 .my-sidebar {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  background-color: #F0F0F0 !important;
+  background-color: #f0f0f0 !important;
 }
 .collapsible {
   box-shadow: none;

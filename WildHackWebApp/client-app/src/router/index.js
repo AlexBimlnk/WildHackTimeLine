@@ -1,11 +1,13 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "../views/Home.vue";
+// import Home from "../views/Home.vue";
+import TimelineTab from "../views/TimelineTab.vue"
 
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home,
+    name: "Timeline",
+    // component: Home,
+    component: TimelineTab,
   },
   // {
   //   path: "/about",
@@ -18,8 +20,8 @@ const routes = [
     component: () => import("../views/FullEvent.vue")
   },
   {
-    path: '/timeline',
-    component: () => import("../views/TimelineTab.vue")
+    path: '/news',
+    component: () => import("../views/Home.vue")
   },
   {
     path: '/newPost',
