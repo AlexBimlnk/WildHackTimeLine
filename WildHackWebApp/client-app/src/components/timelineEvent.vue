@@ -10,7 +10,7 @@
       </div>
     </a>
     <!-- <div class="timeline-badge red lighten-3 white-text"></div> -->
-    <div class="timeline-badge white-text" :style="{backgroundColor: `rgb(0, ${normalizedColor}, 0)`}"></div>
+    <div class="timeline-badge white-text around-white" :style="{backgroundColor: `rgb(0, ${normalizedColor}, 0)`}"></div>
     <div class="year">{{ content.date }}</div>
   </div>
 </template>
@@ -43,6 +43,10 @@ export default {
 
 <style lang="less" scoped>
 @import url("../../node_modules/materialize-css/dist/css/materialize.min.css");
+.around-white {
+  // border: 1px solid white;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+}
 .card {
   background: rgba(0, 0, 0, 0) !important;
   box-shadow: none;

@@ -58,11 +58,6 @@ export default {
         await fetch(`/api/EcologyEvents/${this.cardContent.id}/rating/1`, {
           method: "PUT",
         });
-        // this.like_bool = false;
-        // this.dislike_bool = true;
-        // if (this.startState === this.rating) {
-        //   this.resetResults();
-        // }
       }
     },
     async dislike() {
@@ -71,11 +66,6 @@ export default {
         await fetch(`/api/EcologyEvents/${this.cardContent.id}/rating/-1`, {
           method: "PUT",
         });
-        // this.dislike_bool = false;
-        // this.like_bool = true;
-        // if (this.startState === this.rating) {
-        //   this.resetResults();
-        // }
       }
     },
     resetResults() {

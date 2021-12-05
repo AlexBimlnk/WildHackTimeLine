@@ -19,6 +19,9 @@
 </template>
 
 <script>
+// [] 1. При нажатии на кнопку показать больше и включенном режиме "По популярности", новые элементы не учитываются в рейтинге популярных
+// [] 2. При сортировке по дате необходимо скрывать кнопку "Показать больше"
+
 // import newsCard from "../components/newsCard.vue";
 import smallCard from "../components/smallCard.vue"
 import timelineMap from "../components/timelineMap.vue";
@@ -31,9 +34,8 @@ export default {
   },
   mounted() {
     if (this.$store.state.dataForTimeline.length === 0) {
-      this.$store.dispatch("fetchTimelineFullData"); // Убрать
+      this.$store.dispatch("fetchTimeLineSomePart", this.$store.state.dataForTimeline.length);
     }
-    console.log(this.$store.state.dataForTimeline)
   },
   data() {
     return {

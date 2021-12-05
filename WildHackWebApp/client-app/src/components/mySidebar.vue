@@ -80,7 +80,7 @@ export default {
         this.startDate,
         this.endDate
       );
-      this.$store.commit("fetchTimelineFullData", sorted);
+      this.$store.commit("setDataForTimeline", sorted);
     },
   },
 };
