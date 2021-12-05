@@ -46,7 +46,7 @@ namespace WildHackWebApp.BL
         {
             if (newEco.Count == 0 || newEco == null)
                 return null;
-            for (int i = newEco.Count; i >= 0; i--)
+            for (int i = newEco.Count - 1; i >= 0; i--)
             {
                 for (int j = 0; j < oldEco.Count; j++)
                 {
