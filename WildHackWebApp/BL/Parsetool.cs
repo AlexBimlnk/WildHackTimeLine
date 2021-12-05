@@ -31,7 +31,7 @@ namespace WildHackWebApp.BL
             {SiteName.GoogleNews, new PageElement() {
                                          SiteURL = "https://news.google.com",
                                          RequestURL = "https://news.google.com/search?q=%D0%BA%D0%B0%D0%BC%D1%87%D0%B0%D1%82%D0%BA%D0%B0%20%D0%B7%D0%B0%D0%BF%D0%BE%D0%B2%D0%B5%D0%B4%D0%BD%D0%B8%D0%BA%20when%3A7d&hl=ru&gl=RU&ceid=RU%3Aru",
-                                         ArticlesPath = ".//div[@class='NiLAwe y6IFtc R7GTQ keNKEd j7vNaf']",
+                                         ArticlesPath = ".//div[@class='NiLAwe y6IFtc R7GTQ keNKEd j7vNaf' or @class='NiLAwe y6IFtc R7GTQ keNKEd j7vNaf nID9nc']",
                                          TitlePath = ".//h3[@class='ipQwMb ekueJc RD0gLb']",
                                          TimePath = ".//time[@class='WW6dff uQIVzc Sksgp']/@datetime",
                                          LinkPath = ".//h3/a[@href]/@href",
