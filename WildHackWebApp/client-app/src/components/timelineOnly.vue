@@ -2,7 +2,7 @@
   <div class="timeline">
     <div class="timeline-container">
       <div class="timeline">
-        <transition-group enter-active-class="animated bounceInDown">
+        <transition-group enter-active-class="animated fadeInRight">
           <timeline-event
             v-for="content in $store.state.dataForTimeline"
             :key="content"
